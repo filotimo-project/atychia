@@ -40,8 +40,6 @@ void Actions::returnToTTYNumber(uint32_t ttyNum) const
     if (switchedVt.isError()) {
         const auto error = switchedVt.error();
         qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
-        auto errorMsg = QErrorMessage();
-        errorMsg.showMessage(error.name(), error.message());
         return;
     }
 }
@@ -109,8 +107,6 @@ QDBusConnection::systemBus()};
                      u"%1/atychia-restart-plasmashell"_s.arg(QString::fromUtf8(LIBEXECDIR))};
     QProcess process;
     process.startDetached(u"%1/machinectl"_s.arg(QString::fromUtf8(BINDIR)), args);
-    process.waitForFinished();
-    qInfo().noquote() << "relaunchPlasma() outputted: " << process.readAllStandardOutput();
 
     returnToTTYAndQuit();
 }
@@ -220,6 +216,4 @@ void Actions::launchKonsole() const
     QStringList args{u"-e"_s, u"$SHELL -c %1/atychia-interactive-su"_s.arg(QString::fromUtf8(LIBEXECDIR))};
     QProcess process;
     process.startDetached(u"%1/konsole"_s.arg(QString::fromUtf8(BINDIR)), args);
-    process.waitForFinished();
-    qInfo().noquote() << "launchKonsole() outputted: " << process.readAllStandardOutput();
 }
