@@ -72,10 +72,11 @@ Kirigami.ApplicationWindow {
             iconSource: "cpu"
         }
         ListElement {
+            // TODO: Make this terminal emulator-agnostic
             actionName: "launchKonsole"
             name: "Open a terminal window"
             description: "Opens a Konsole window that allows you to log in as your user and execute commands."
-            iconSource: "konsole"
+            iconSource: "utilities-terminal"
         }
     }
 
