@@ -1,7 +1,7 @@
 # Atychia
 
 A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from a broken session, rather than being forced to a TTY.
-Bind any chosen keyboard shortcut on the desktop to `pkexec /usr/bin/atychia-launch`.
+This automatically registers a shortcut with KDE, and is designed for use with KDE.
 
 A daemon using libudev and libevdev, potentially utilising `interception-tools` will be implemented eventually.
 Keyboard navigation also needs to be worked on to make this foolproof as well as a potential text-based UI where a Wayland session can't be launched.
