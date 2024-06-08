@@ -9,6 +9,8 @@ build/
 .cache
 .idea
 /cmake-build*
+.kateproject.build
+*.kate-swp
 
 # Template file results
 src/directories.h
