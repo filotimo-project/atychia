@@ -113,7 +113,7 @@ Kirigami.ApplicationWindow {
                         Layout.alignment: Qt.AlignRight|Qt.AlignVCenter
                         Layout.columnSpan: 2
                         text: i18n("Run")
-                        onClicked: switch (actionName) { // This should be in the ListElement somehow
+                        onClicked: switch (actionName) { // TODO: This should be in the ListElement somehow
                             case "return": Actions.returnToTTYAndQuit(); break;
                             case "relaunchPlasma": Actions.relaunchPlasma(); break;
                             case "logout": Actions.logout(); break;
