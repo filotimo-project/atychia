@@ -98,15 +98,7 @@ QDBusConnection::systemBus()};
 
     // TODO This is not good, dbus should be used but I don't know how to restart a user service.
     // Needs elevation
-    QStringList args{u"shell"_s,
-                     u"--uid=%1"_s.arg(userUid),
-                     u"--setenv=SHELL=%1/bash"_s.arg(QString::fromUtf8(BINDIR)),
-                     u".host"_s,
-                     u"%1/bash"_s.arg(QString::fromUtf8(BINDIR)),
-                     u"-c"_s,
-                     u"%1/atychia-restart-plasmashell"_s.arg(QString::fromUtf8(LIBEXECDIR))};
-    QProcess process;
-    process.startDetached(u"%1/machinectl"_s.arg(QString::fromUtf8(BINDIR)), args);
+    QProcess().start(u"%1/atychia-restart-plasmashell"_s.arg(QString::fromUtf8(LIBEXECDIR)), {u"%1"_s.arg(userUid)});
 
     returnToTTYAndQuit();
 }
