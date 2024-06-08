@@ -7,6 +7,7 @@ A daemon using libudev and libevdev, potentially utilising `interception-tools` 
 Keyboard navigation also needs to be worked on to make this foolproof as well as a potential text-based UI where a Wayland session can't be launched.
 
 ![Screenshot of the application](screenshot.png)
+![Recording of the application](atychia.gif)
 
 Requires a system user `atychia` (UID below 1000, and no home dir) which is in the `atychia` and `video` group.
 You can make this with `sudo useradd -r atychia && sudo usermod -a -G video atychia`.
