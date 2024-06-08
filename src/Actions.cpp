@@ -88,7 +88,7 @@ QDBusConnection::systemBus()};
                      u"--setenv=SHELL=%1/bash"_s.arg(QString::fromUtf8(BINDIR)),
                      u".host"_s,
                      u"%1/bash"_s.arg(QString::fromUtf8(BINDIR)),
-                     u"-lc"_s,
+                     u"-c"_s,
                      u"%1/atychia-restart-plasmashell"_s.arg(QString::fromUtf8(LIBEXECDIR))};
     QProcess process;
     process.startDetached(u"%1/machinectl"_s.arg(QString::fromUtf8(BINDIR)), args);
