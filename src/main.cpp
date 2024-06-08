@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
         // The program name used internally.
         u"atychia"_s,
         // A displayable program name string.
-        i18nc("@title", "Deskstringtop Recovery"),
+        i18nc("@title", "Desktop Recovery"),
         // The program version string.
         QStringLiteral(ATYCHIA_VERSION_STRING),
         // Short description of what the app does.
