@@ -36,38 +36,38 @@ Kirigami.ApplicationWindow {
         id: actionsModel
 
         ListElement {
-            actionName: "return"
+            actionName: "Return"
             name: "Return to desktop"
             description: "Exits Desktop Recovery and returns to the desktop."
             iconSource: "plasmashell"
         }
         ListElement {
-            actionName: "logout"
+            actionName: "Log out"
             name: "Log out of current user"
             description: "Immediately logs out of current user. All unsaved work will be lost."
             iconSource: "system-log-out"
         }
         ListElement {
-            actionName: "shutdown"
+            actionName: "Shut down"
             name: "Shutdown computer"
             description: "Immediately shuts down computer. All unsaved work will be lost."
             iconSource: "system-shutdown"
         }
         ListElement {
-            actionName: "reboot"
+            actionName: "Reboot"
             name: "Reboot computer"
             description: "Immediately reboots computer. All unsaved work will be lost."
             iconSource: "system-reboot"
         }
         ListElement {
-            actionName: "rebootToFirmwareSetup"
+            actionName: "Reboot to setup"
             name: "Reboot to Firmware Setup"
             description: "Immediately reboots to Firmware Setup. All unsaved work will be lost."
             iconSource: "cpu"
         }
         ListElement {
             // TODO: Make this terminal-emulator-agnostic
-            actionName: "launchKonsole"
+            actionName: "Launch terminal"
             name: "Open a terminal window"
             description: "Opens a Konsole window that allows you to log in and execute commands."
             iconSource: "utilities-terminal"
@@ -113,14 +113,14 @@ Kirigami.ApplicationWindow {
                     Controls.Button {
                         Layout.alignment: Qt.AlignRight|Qt.AlignVCenter
                         Layout.columnSpan: 2
-                        text: i18n("Run")
+                        text: actionName
                         onClicked: switch (actionName) { // TODO: This should be in the ListElement somehow
-                            case "return": Actions.returnToTTYAndQuit(); break;
-                            case "logout": Actions.logout(); break;
-                            case "shutdown": Actions.shutdown(); break;
-                            case "reboot": Actions.reboot(); break;
-                            case "rebootToFirmwareSetup": Actions.rebootToFirmwareSetup(); break;
-                            case "launchKonsole": Actions.launchKonsole(); break;
+                            case "Return": Actions.returnToTTYAndQuit(); break;
+                            case "Log out": Actions.logout(); break;
+                            case "Shut down": Actions.shutdown(); break;
+                            case "Reboot": Actions.reboot(); break;
+                            case "Reboot to setup": Actions.rebootToFirmwareSetup(); break;
+                            case "Launch terminal": Actions.launchKonsole(); break;
                         }
                     }
                 }
@@ -136,9 +136,15 @@ Kirigami.ApplicationWindow {
         title: i18n("Desktop Recovery")
 
         Kirigami.CardsListView {
-            id: view
+            keyNavigationEnabled: true
+            id: listView
             model: actionsModel
             delegate: actionsDelegate
+
+            header: Kirigami.InlineViewHeader {
+                width: listView.width
+                text: i18n("Hold Alt and press underlined letters on buttons with the keyboard for keyboard navigation.")
+            }
         }
     }
 }
