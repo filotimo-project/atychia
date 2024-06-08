@@ -18,6 +18,7 @@
 #include <KAboutData>
 #include <KLocalizedContext>
 #include <KLocalizedString>
+#include <cstdint>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
         // The program name used internally.
         u"atychia"_s,
         // A displayable program name string.
-        i18nc("@title", "Desktop Recovery"),
+        i18nc("@title", "Deskstringtop Recovery"),
         // The program version string.
         QStringLiteral(ATYCHIA_VERSION_STRING),
         // Short description of what the app does.
@@ -62,15 +63,15 @@ int main(int argc, char *argv[])
         i18nc("TTY should not be translated, number is a literal digit, and TTY is an environment to return to", "TTY number to return to."));
     parser.addPositionalArgument(u"uid"_s,
                                  i18nc("UID should not be translated, originating as in the user that the process comes from", "UID of originating user."));
-    parser.addPositionalArgument(u"session_id"_s, i18nc("Originating as in the user that the ID comes from", "Session ID of originating user."));
+    parser.addPositionalArgument(u"seat_number"_s, i18nc("Originating as in the user that the process comes from", "Seat number of originating user."));
 
     parser.process(app);
 
-    const QString ttyNumber = parser.positionalArguments()[0];
+    const uint32_t ttyNumber = std::stoi(parser.positionalArguments()[0].toStdString());
     const QString userUid = parser.positionalArguments()[1];
-    const QString sessionId = parser.positionalArguments()[2];
+    const uint32_t seatNumber = std::stoi(parser.positionalArguments()[2].toStdString());
 
-    Actions actions = Actions(&app, ttyNumber, userUid, sessionId);
+    Actions actions = Actions(&app, ttyNumber, userUid, seatNumber);
 
     QQmlApplicationEngine engine;
 

@@ -13,14 +13,14 @@ class Actions : public QObject
 {
     Q_OBJECT
 
-    void returnToTTYNumber(QString ttyNum) const;
+    void returnToTTYNumber(uint32_t ttyNum) const;
 
 public:
-    explicit Actions(QObject *parent = nullptr, QString tty_number = u""_s, QString user_uid = u""_s, QString session_id = u""_s);
+    explicit Actions(QObject *parent = nullptr, uint32_t tty_number = 0, QString user_uid = u""_s, uint32_t seat_number = 0);
 
-    QString ttyNumber;
+    uint32_t ttyNumber;
     QString userUid;
-    QString sessionId;
+    uint32_t seatNumber;
 
     // "public slots:" doesn't work
     Q_SLOT void returnToTTYAndQuit() const;

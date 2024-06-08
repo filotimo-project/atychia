@@ -15,22 +15,30 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-Actions::Actions(QObject *parent, QString tty_number, QString user_uid, QString session_id)
+Actions::Actions(QObject *parent, uint32_t tty_number, QString user_uid, uint32_t seat_number)
     : QObject(parent)
 {
     ttyNumber = tty_number;
     userUid = user_uid;
-    sessionId = session_id;
+    seatNumber = seat_number;
 }
 
-void Actions::returnToTTYNumber(QString ttyNum) const
+void Actions::returnToTTYNumber(uint32_t ttyNum) const
 {
-    // TODO This should also be done programmatically
-    QStringList args{ttyNum};
-    QProcess process;
-    process.startDetached(u"%1/chvt"_s.arg(QString::fromUtf8(BINDIR)), args);
-    process.waitForFinished();
-    qInfo().noquote() << "returnToTTYNumber() outputted: " << process.readAllStandardOutput();
+    QDBusInterface logind{u"org.freedesktop.login1"_s,
+                          u"/org/freedesktop/login1/seat/seat%1"_s.arg(seatNumber),
+                          u"org.freedesktop.login1.Seat"_s,
+                          QDBusConnection::systemBus()};
+
+    const auto message = logind.callWithArgumentList(QDBus::Block, u"SwitchTo"_s, {ttyNum});
+    QDBusPendingReply<QString> switchedVt = message;
+
+    Q_ASSERT(switchedVt.isFinished());
+    if (switchedVt.isError()) {
+        const auto error = switchedVt.error();
+        qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+        return;
+    }
 }
 
 void Actions::returnToTTYAndQuit() const
@@ -40,25 +48,24 @@ void Actions::returnToTTYAndQuit() const
 }
 
 void Actions::logout() const
-{ // TODO
+{
     QDBusInterface logind{u"org.freedesktop.login1"_s, u"/org/freedesktop/login1"_s, u"org.freedesktop.login1.Manager"_s, QDBusConnection::systemBus()};
     const auto message = logind.callWithArgumentList(QDBus::Block,
-                                                     u"KillSession"_s,
+                                                     u"KillUser"_s,
                                                      {
-                                                         sessionId,
-                                                         u"all"_s,
+                                                         userUid,
                                                          SIGTERM,
                                                      });
-    QDBusPendingReply<QString> killedSession = message;
+    QDBusPendingReply<QString> killedUser = message;
 
-    Q_ASSERT(killedSession.isFinished());
-    if (killedSession.isError()) {
-        const auto error = killedSession.error();
+    Q_ASSERT(killedUser.isFinished());
+    if (killedUser.isError()) {
+        const auto error = killedUser.error();
         qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
         return;
     }
 
-    returnToTTYNumber(u"1"_s);
+    returnToTTYNumber(1);
     QCoreApplication::quit();
 }
 
