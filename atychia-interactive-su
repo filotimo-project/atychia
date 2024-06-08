@@ -1,4 +1,5 @@
 #!/bin/bash
+printf "Type 'exit' to close the window after logging in."
 
 echo "Username:"
 read username
