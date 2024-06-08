@@ -50,7 +50,7 @@ Kirigami.ApplicationWindow {
         ListElement {
             actionName: "shutdown"
             name: "Shutdown computer"
-            description: "Immediately shuts down comp    Q_SLOT void relaunchPlasma() const;uter. All unsaved work will be lost."
+            description: "Immediately shuts down computer. All unsaved work will be lost."
             iconSource: "system-shutdown"
         }
         ListElement {
@@ -69,7 +69,7 @@ Kirigami.ApplicationWindow {
             // TODO: Make this terminal-emulator-agnostic
             actionName: "launchKonsole"
             name: "Open a terminal window"
-            description: "Opens a Konsole window that allows you to log in as your user and execute commands."
+            description: "Opens a Konsole window that allows you to log in and execute commands."
             iconSource: "utilities-terminal"
         }
     }
