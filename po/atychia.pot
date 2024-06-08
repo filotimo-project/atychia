@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.filotimo.atychia 0.1\n"
 "Report-Msgid-Bugs-To: tduck973564@gmail.com\n"
-"POT-Creation-Date: 2024-06-09 01:42+1000\n"
+"POT-Creation-Date: 2024-06-09 02:52+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,29 +26,29 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: build/src/contents/ui/Main.qml:122 src/contents/ui/Main.qml:122
+#: build/src/contents/ui/Main.qml:116 src/contents/ui/Main.qml:116
 #, kde-format
 msgid "Run"
 msgstr ""
 
-#: build/src/contents/ui/Main.qml:143 src/contents/ui/Main.qml:143
+#: build/src/contents/ui/Main.qml:136 src/contents/ui/Main.qml:136
 #, kde-format
 msgid "Desktop Recovery"
 msgstr ""
 
-#: src/Actions.cpp:42 src/Actions.cpp:72 src/Actions.cpp:123
-#: src/Actions.cpp:135 src/Actions.cpp:152 src/Actions.cpp:164
-#: src/Actions.cpp:181 src/Actions.cpp:195 src/Actions.cpp:206
+#: src/Actions.cpp:42 src/Actions.cpp:72 src/Actions.cpp:89 src/Actions.cpp:101
+#: src/Actions.cpp:118 src/Actions.cpp:130 src/Actions.cpp:147
+#: src/Actions.cpp:161 src/Actions.cpp:172
 #, kde-format
 msgid "Asynchronous call finished with error: %1 (%2)"
 msgstr ""
 
-#: src/Actions.cpp:139
+#: src/Actions.cpp:105
 #, kde-format
 msgid "poweroff"
 msgstr ""
 
-#: src/Actions.cpp:168 src/Actions.cpp:210
+#: src/Actions.cpp:134 src/Actions.cpp:176
 #, kde-format
 msgid "reboot"
 msgstr ""
