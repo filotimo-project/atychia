@@ -15,7 +15,7 @@ class Actions : public QObject
     Q_OBJECT
 
     void returnToTTYNumber(uint32_t ttyNum) const;
-    void showErrorMessage(QString message) const;
+    void showErrorMessage(QString name, QString message) const;
 
 public:
     explicit Actions(QObject *parent = nullptr, uint32_t tty_number = 0, uint32_t user_uid = 0, uint32_t seat_number = 0);

@@ -10,7 +10,7 @@
 #include <QCoreApplication>
 #include <QDBusInterface>
 #include <QDBusPendingReply>
-#include <QErrorMessage>
+#include <QMessageBox>
 #include <QProcess>
 #include <csignal>
 
@@ -22,8 +22,6 @@ Actions::Actions(QObject *parent, uint32_t tty_number, uint32_t user_uid, uint32
     ttyNumber = tty_number;
     userUid = user_uid;
     seatNumber = seat_number;
-
-    QErrorMessage::qtHandler();
 }
 
 void Actions::returnToTTYNumber(uint32_t ttyNum) const
@@ -40,13 +38,16 @@ void Actions::returnToTTYNumber(uint32_t ttyNum) const
     if (switchedVt.isError()) {
         const auto error = switchedVt.error();
         qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+        showErrorMessage(error.name(), error.message());
         return;
     }
 }
 
-void Actions::showErrorMessage(QString message) const
+void Actions::showErrorMessage(QString name, QString message) const
 {
-    QErrorMessage::qtHandler()->showMessage(message);
+    QMessageBox messageBox;
+    messageBox.critical(nullptr, name, message);
+    messageBox.setFixedSize(400, 200);
 }
 
 void Actions::returnToTTYAndQuit() const
@@ -70,6 +71,7 @@ void Actions::logout() const
     if (killedUser.isError()) {
         const auto error = killedUser.error();
         qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+        showErrorMessage(error.name(), error.message());
         return;
     }
 
@@ -87,6 +89,7 @@ void Actions::shutdown() const
     if (canPowerOff.isError()) {
         const auto error = canPowerOff.error();
         qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+        showErrorMessage(error.name(), error.message());
     }
 
     if (canPowerOff.value() == u"yes"_s) {
@@ -99,10 +102,12 @@ void Actions::shutdown() const
         if (powerOff.isError()) {
             const auto error = powerOff.error();
             qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+            showErrorMessage(error.name(), error.message());
         }
 
     } else {
         qCritical().noquote() << i18n("poweroff", u"Can't power off: CanPowerOff() result is %1"_s).arg(canPowerOff.value());
+        showErrorMessage(i18n("poweroff"), i18n("Can't power off: CanPowerOff() result is %1", canPowerOff.value()));
     }
 }
 
@@ -116,6 +121,7 @@ void Actions::reboot() const
     if (canReboot.isError()) {
         const auto error = canReboot.error();
         qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+        showErrorMessage(error.name(), error.message());
     }
 
     if (canReboot.value() == u"yes"_s) {
@@ -128,10 +134,12 @@ void Actions::reboot() const
         if (reboot.isError()) {
             const auto error = reboot.error();
             qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+            showErrorMessage(error.name(), error.message());
         }
 
     } else {
         qCritical().noquote() << i18n("reboot", u"Can't reboot: CanReboot() result is %1"_s).arg(canReboot.value());
+        showErrorMessage(i18n("reboot"), i18n("Can't reboot: CanReboot() result is %1", canReboot.value()));
     }
 }
 
@@ -145,6 +153,7 @@ void Actions::rebootToFirmwareSetup() const
     if (canReboot.isError()) {
         const auto error = canReboot.error();
         qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+        showErrorMessage(error.name(), error.message());
     }
 
     if (canReboot.value() == u"yes"_s) {
@@ -159,6 +168,7 @@ void Actions::rebootToFirmwareSetup() const
         if (setRebootToFirmwareSetup.isError()) {
             const auto error = setRebootToFirmwareSetup.error();
             qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+            showErrorMessage(error.name(), error.message());
         }
 
         QDBusPendingReply<> reboot = logind.callWithArgumentList(QDBus::Block,
@@ -170,10 +180,12 @@ void Actions::rebootToFirmwareSetup() const
         if (reboot.isError()) {
             const auto error = reboot.error();
             qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+            showErrorMessage(error.name(), error.message());
         }
 
     } else {
         qCritical().noquote() << i18n("reboot", u"Can't reboot to firmware setup: CanRebootToFirmwareSetup() result is %1"_s).arg(canReboot.value());
+        showErrorMessage(i18n("reboot"), i18n("Can't reboot to firmware setup: CanRebootToFirmwareSetup() result is %1", canReboot.value()));
     }
 }
 
