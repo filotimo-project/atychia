@@ -1,7 +1,7 @@
 # Atychia
 
 A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from a broken session, rather than being forced to a TTY.
-Bind any chosen keyboard shortcut on the desktop to `pkexec /usr/bin/atychia-launch`.
+Bind any chosen keyboard shortcut on the desktop to `pkexec /usr/bin/atychia-launch`. A daemon using libudev and libevdev, potentially utilising `interception-tools` will be implemented eventually.
 
 Requires a system user `atychia` (UID below 1000, and no home dir) which is in the `atychia` and `video` group.
 You can make this with `sudo useradd -r atychia && sudo usermod -a -G video atychia`.
