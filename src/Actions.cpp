@@ -10,17 +10,20 @@
 #include <QCoreApplication>
 #include <QDBusInterface>
 #include <QDBusPendingReply>
+#include <QErrorMessage>
 #include <QProcess>
 #include <csignal>
 
 using namespace Qt::Literals::StringLiterals;
 
-Actions::Actions(QObject *parent, uint32_t tty_number, QString user_uid, uint32_t seat_number)
+Actions::Actions(QObject *parent, uint32_t tty_number, uint32_t user_uid, uint32_t seat_number)
     : QObject(parent)
 {
     ttyNumber = tty_number;
     userUid = user_uid;
     seatNumber = seat_number;
+
+    QErrorMessage::qtHandler();
 }
 
 void Actions::returnToTTYNumber(uint32_t ttyNum) const
@@ -37,8 +40,15 @@ void Actions::returnToTTYNumber(uint32_t ttyNum) const
     if (switchedVt.isError()) {
         const auto error = switchedVt.error();
         qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+        auto errorMsg = QErrorMessage();
+        errorMsg.showMessage(error.name(), error.message());
         return;
     }
+}
+
+void Actions::showErrorMessage(QString message) const
+{
+    QErrorMessage::qtHandler()->showMessage(message);
 }
 
 void Actions::returnToTTYAndQuit() const

@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     parser.process(app);
 
     const uint32_t ttyNumber = std::stoi(parser.positionalArguments()[0].toStdString());
-    const QString userUid = parser.positionalArguments()[1];
+    const uint32_t userUid = std::stoi(parser.positionalArguments()[1].toStdString());
     const uint32_t seatNumber = std::stoi(parser.positionalArguments()[2].toStdString());
 
     Actions actions = Actions(&app, ttyNumber, userUid, seatNumber);
