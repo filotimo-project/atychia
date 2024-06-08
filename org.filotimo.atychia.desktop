@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck973564@gmail.com>
+[Desktop Entry]
+Name=Desktop Recovery
+Comment=Menu to recover from a broken desktop session.
+Exec=pkexec atychia-launch
+Icon=system-help
+Type=Application
+Terminal=false
+NoDisplay=yes
+Categories=Qt;KDE;System;
+X-KDE-Shortcuts=Meta+Ctrl+Alt+Del

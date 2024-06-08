@@ -76,7 +76,7 @@ Kirigami.ApplicationWindow {
             actionName: "launchKonsole"
             name: "Open a terminal window"
             description: "Opens a Konsole window that allows you to log in as your user and execute commands."
-            iconSource: "utilities-terminal"
+            iconSource: "dialog-scripts"
         }
     }
 
