@@ -37,4 +37,4 @@ sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
     --property TTYVHangup=yes \
     --property Environment="XCURSOR_THEME=breeze_cursors" \
     --property Environment="WLR_NO_HARDWARE_CURSORS=1" \
-    sh -c "cage -sm last -- @KDE_INSTALL_FULL_BINDIR@/atychia $prev_tty_num $uid $seat_num ; chvt $(echo $prev_tty | cut -c 4-)"
+    sh -c "cage -sm last -- @KDE_INSTALL_FULL_BINDIR@/atychia $prev_tty_num $uid $seat_num || chvt $(echo $prev_tty | cut -c 4-)"

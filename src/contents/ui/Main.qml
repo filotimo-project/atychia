@@ -71,6 +71,12 @@ Kirigami.ApplicationWindow {
             description: "Immediately reboots to Firmware Setup. All unsaved work will be lost."
             iconSource: "cpu"
         }
+        ListElement {
+            actionName: "launchKonsole"
+            name: "Open a terminal window"
+            description: "Opens a Konsole window that allows you to log in as your user and execute commands."
+            iconSource: "konsole"
+        }
     }
 
     Component {
@@ -120,6 +126,7 @@ Kirigami.ApplicationWindow {
                             case "shutdown": Actions.shutdown(); break;
                             case "reboot": Actions.reboot(); break;
                             case "rebootToFirmwareSetup": Actions.rebootToFirmwareSetup(); break;
+                            case "launchKonsole": Actions.launchKonsole(); break;
                         }
                     }
                 }

@@ -207,15 +207,9 @@ void Actions::rebootToFirmwareSetup() const
 
 void Actions::launchKonsole() const
 {
-    QStringList args{u"shell"_s,
-                     u"--uid=%1"_s.arg(userUid),
-                     u"--setenv=SHELL=%1/bash"_s.arg(QString::fromUtf8(BINDIR)),
-                     u".host"_s,
-                     u"%1/bash"_s.arg(QString::fromUtf8(BINDIR)),
-                     u"-c"_s,
-                     u"%1/atychia-restart-plasmashell"_s.arg(QString::fromUtf8(LIBEXECDIR))};
+    QStringList args{u"-e"_s, u"$SHELL -c %1/atychia-interactive-su"_s.arg(QString::fromUtf8(LIBEXECDIR))};
     QProcess process;
     process.startDetached(u"%1/konsole"_s.arg(QString::fromUtf8(BINDIR)), args);
     process.waitForFinished();
-    qInfo().noquote() << "relaunchPlasma() outputted: " << process.readAllStandardOutput();
+    qInfo().noquote() << "launchKonsole() outputted: " << process.readAllStandardOutput();
 }
