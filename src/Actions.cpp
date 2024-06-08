@@ -204,3 +204,18 @@ void Actions::rebootToFirmwareSetup() const
         qCritical().noquote() << i18n("reboot", u"Can't reboot to firmware setup: CanRebootToFirmwareSetup() result is %1"_s).arg(canReboot.value());
     }
 }
+
+void Actions::launchKonsole() const
+{
+    QStringList args{u"shell"_s,
+                     u"--uid=%1"_s.arg(userUid),
+                     u"--setenv=SHELL=%1/bash"_s.arg(QString::fromUtf8(BINDIR)),
+                     u".host"_s,
+                     u"%1/bash"_s.arg(QString::fromUtf8(BINDIR)),
+                     u"-c"_s,
+                     u"%1/atychia-restart-plasmashell"_s.arg(QString::fromUtf8(LIBEXECDIR))};
+    QProcess process;
+    process.startDetached(u"%1/konsole"_s.arg(QString::fromUtf8(BINDIR)), args);
+    process.waitForFinished();
+    qInfo().noquote() << "relaunchPlasma() outputted: " << process.readAllStandardOutput();
+}

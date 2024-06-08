@@ -29,4 +29,5 @@ public:
     Q_SLOT void shutdown() const;
     Q_SLOT void reboot() const;
     Q_SLOT void rebootToFirmwareSetup() const;
+    Q_SLOT void launchKonsole() const;
 };

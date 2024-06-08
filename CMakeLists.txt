@@ -60,6 +60,7 @@ install(FILES org.filotimo.atychia-launch.policy DESTINATION ${KDE_INSTALL_FULL_
 install(FILES 99-filotimo-atychia.rules DESTINATION ${KDE_INSTALL_FULL_SYSCONFDIR}/polkit-1/rules.d)
 install(PROGRAMS atychia-launch DESTINATION ${KDE_INSTALL_FULL_BINDIR})
 install(PROGRAMS atychia-restart-plasmashell DESTINATION ${KDE_INSTALL_FULL_LIBEXECDIR})
+install(PROGRAMS atychia-interactive-su DESTINATION ${KDE_INSTALL_FULL_LIBEXECDIR})
 
 ki18n_install(po)
 
