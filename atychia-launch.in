@@ -7,6 +7,7 @@
 uid="$PKEXEC_UID"
 
 prev_tty=$(@KDE_INSTALL_FULL_BINDIR@/loginctl list-sessions | grep $uid | xargs | cut -f 5 -d " ")
+prev_tty_num=$(echo $prev_tty | cut -c 4-)
 free_tty=$(find -L /proc/[1-9]*/fd/. ! -name . -prune -type c -exec  stat -Lc '%t %T' {} + |
   awk '$1 == "4" {seen[$2]}
        END {
@@ -14,17 +15,19 @@ free_tty=$(find -L /proc/[1-9]*/fd/. ! -name . -prune -type c -exec  stat -Lc '%
            if (!(sprintf("%x", i) in seen))
              print "/dev/tty" i
        }' | tail -n 1)
-session_id=$(@KDE_INSTALL_FULL_BINDIR@/loginctl list-sessions | grep $uid | xargs | cut -f 1 -d " ")
+seat_num=$(@KDE_INSTALL_FULL_BINDIR@/loginctl list-sessions | grep $uid | xargs | cut -f 4 -d " " | cut -b 5-)
 
 chvt "$(echo "$free_tty" | cut -c 9-)"
 
 echo "prev_tty:     $prev_tty"
+echo "prev_tty_num: $prev_tty_num"
 echo "free_tty:     $free_tty"
 echo "uid:          $uid"
-echo "session_id:   $session_id"
+echo "seat_num:     $seat_num"
 
-# Running the actual GUI as root is not great...
-# TODO: Launch transient service without root, and instead run a KAuth helper that is authenticated automatically
+# Suppress `atychiarc is not writable` error on launch
+sudo install -g atychia -o atychia -d /home/atychia/
+
 sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
     --property PAMName=login \
     --property User="atychia" \
@@ -34,4 +37,4 @@ sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
     --property TTYVHangup=yes \
     --property Environment="XCURSOR_THEME=breeze_cursors" \
     --property Environment="WLR_NO_HARDWARE_CURSORS=1" \
-    sh -c "cage -dsm last -- @KDE_INSTALL_FULL_BINDIR@/atychia $(echo $prev_tty | cut -c 4-) $uid $session_id ; chvt $(echo $prev_tty | cut -c 4-)"
+    sh -c "cage -dsm last -- @KDE_INSTALL_FULL_BINDIR@/atychia $prev_tty_num $uid $seat_num ; chvt $(echo $prev_tty | cut -c 4-)"
