@@ -26,7 +26,6 @@ public:
 
     // "public slots:" doesn't work
     Q_SLOT void returnToTTYAndQuit() const;
-    Q_SLOT void relaunchPlasma() const;
     Q_SLOT void logout() const;
     Q_SLOT void shutdown() const;
     Q_SLOT void reboot() const;

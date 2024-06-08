@@ -77,32 +77,6 @@ void Actions::logout() const
     QCoreApplication::quit();
 }
 
-void Actions::relaunchPlasma() const
-{
-    /* this won't work
-     *   QDBusInterface systemd { u"org.freedesktop.systemd1"_s, u"/org/freedesktop/systemd1"_s, u"org.freedesktop.systemd1.Manager"_s,
-QDBusConnection::systemBus()};
-     *   const auto message = systemd.callWithArgumentList(QDBus::Block, u"TryRestartUnit"_s, {u"plasma_plasmashell"_s,});
-     *   QDBusPendingReply< QString > unitRestarted = message;
-     *
-     *   Q_ASSERT(unitRestarted.isFinished());
-     *   if (unitRestarted.isError()) {
-     *       const auto error = unitRestarted.error();
-     *       qWarning().noquote()
-     *       << i18n("Asynchronous call finished with error: %1 (%2)")
-     *       .arg(error.name(), error.message());
-     *       return;
-     *
-     *   returnToTTYAndTerminate();
-}*/
-
-    // TODO This is not good, dbus should be used but I don't know how to restart a user service.
-    // Needs elevation
-    QProcess().start(u"%1/atychia-restart-plasmashell"_s.arg(QString::fromUtf8(LIBEXECDIR)), {u"%1"_s.arg(userUid)});
-
-    returnToTTYAndQuit();
-}
-
 void Actions::shutdown() const
 {
     QDBusInterface logind{u"org.freedesktop.login1"_s, u"/org/freedesktop/login1"_s, u"org.freedesktop.login1.Manager"_s, QDBusConnection::systemBus()};
