@@ -1,21 +1,12 @@
+# SPDX-License-Identifier: CC0-1.0
+# SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck973564@gmail.com>
 [Desktop Entry]
-Categories=Qt;KDE;System;
-Comment[en_AU]=A shortcut to restart the KDE Plasma Shell
+Name=Restart Plasmashell
 Comment=A shortcut to restart the KDE Plasma Shell
 Exec=atychia-restart-plasmashell
-GenericName[en_AU]=
-GenericName=
 Icon=system-help
-MimeType=
-Name[en_AU]=Restart Plasma Shell
-Name=Restart Plasma Shell
-NoDisplay=yes
-Path=
-PrefersNonDefaultGPU=false
-StartupNotify=true
-Terminal=false
-TerminalOptions=
 Type=Application
+Terminal=false
+NoDisplay=yes
+Categories=Qt;KDE;System;
 X-KDE-Shortcuts=Meta+Ctrl+Shift+B
-X-KDE-SubstituteUID=false
-X-KDE-Username=
