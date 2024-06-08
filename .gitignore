@@ -1,0 +1,16 @@
+build/
+*.kdev4
+.cmake/
+
+# LSP & IDE
+/.clang-format
+/compile_commands.json
+.clangd
+.cache
+.idea
+/cmake-build*
+
+# Template file results
+src/directories.h
+atychia-launch
+atychia-restart-plasmashell

@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck973564@gmail.com>
+
+# Must be run from within Polkit (pkexec)
+uid="$PKEXEC_UID"
+
+prev_tty=$(@KDE_INSTALL_FULL_BINDIR@/loginctl list-sessions | grep $uid | xargs | cut -f 5 -d " ")
+free_tty=$(find -L /proc/[1-9]*/fd/. ! -name . -prune -type c -exec  stat -Lc '%t %T' {} + |
+  awk '$1 == "4" {seen[$2]}
+       END {
+         for (i=1; i<=63; i++)
+           if (!(sprintf("%x", i) in seen))
+             print "/dev/tty" i
+       }' | tail -n 1)
+session_id=$(@KDE_INSTALL_FULL_BINDIR@/loginctl list-sessions | grep $uid | xargs | cut -f 1 -d " ")
+
+chvt "$(echo "$free_tty" | cut -c 9-)"
+
+echo "prev_tty:     $prev_tty"
+echo "free_tty:     $free_tty"
+echo "uid:          $uid"
+echo "session_id:   $session_id"
+
+# Running the actual GUI as root is not great...
+# TODO: Launch transient service without root, and instead run a KAuth helper that is authenticated automatically
+sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
+    --property PAMName=login \
+    --property User="atychia" \
+    --property StandardInput=tty \
+    --property TTYPath="$free_tty" \
+    --property TTYReset=yes \
+    --property TTYVHangup=yes \
+    --property Environment="XCURSOR_THEME=breeze_cursors" \
+    --property Environment="WLR_NO_HARDWARE_CURSORS=1" \
+    sh -c "cage -dsm last -- @KDE_INSTALL_FULL_BINDIR@/atychia $(echo $prev_tty | cut -c 4-) $uid $session_id ; chvt $(echo $prev_tty | cut -c 4-)"

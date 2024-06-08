@@ -1,0 +1,17 @@
+/* Allow atychia group to log other users out without authentication prompt.
+ * Allow atychia group to shut down and reboot when other users are logged in,
+ * and when application inhibits this.
+ * Allow atychia group to change VT without authentication prompt. */
+
+polkit.addRule(function(action, subject) {
+    if ((
+    action.id == "org.freedesktop.login1.manage" ||
+    action.id == "org.freedesktop.login1.power-off-multiple-sessions" ||
+    action.id == "org.freedesktop.login1.power-off-ignore-inhibit" ||
+    action.id == "org.freedesktop.login1.reboot-multiple-sessions" ||
+    action.id == "org.freedesktop.login1.reboot-ignore-inhibit" ||
+    action.id == "org.freedesktop.login1.chvt"
+    ) && subject.isInGroup("atychia")) {
+        return polkit.Result.YES;
+    }
+});
