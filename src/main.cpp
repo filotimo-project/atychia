@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
         // The license this code is released under.
         KAboutLicense::GPL,
         // Copyright Statement.
-        i18n("Filotimo Linux (c) 2024"));
+        i18n("Thomas Duckworth (c) 2024"));
     aboutData.addAuthor(i18nc("@info:credit", "Thomas Duckworth"),
                         i18nc("@info:credit", "Author"),
                         u"tduck973564@gmail.com"_s,
