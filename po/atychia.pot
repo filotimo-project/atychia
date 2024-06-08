@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.filotimo.atychia 0.1\n"
 "Report-Msgid-Bugs-To: tduck973564@gmail.com\n"
-"POT-Creation-Date: 2024-06-09 02:52+1000\n"
+"POT-Creation-Date: 2024-06-09 03:40+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,14 +26,16 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: build/src/contents/ui/Main.qml:116 src/contents/ui/Main.qml:116
-#, kde-format
-msgid "Run"
-msgstr ""
-
 #: build/src/contents/ui/Main.qml:136 src/contents/ui/Main.qml:136
 #, kde-format
 msgid "Desktop Recovery"
+msgstr ""
+
+#: build/src/contents/ui/Main.qml:146 src/contents/ui/Main.qml:146
+#, kde-format
+msgid ""
+"Hold Alt and press underlined letters on buttons with the keyboard for "
+"keyboard navigation."
 msgstr ""
 
 #: src/Actions.cpp:42 src/Actions.cpp:72 src/Actions.cpp:89 src/Actions.cpp:101
