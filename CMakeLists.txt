@@ -57,8 +57,11 @@ configure_file(
 )
 
 install(FILES org.filotimo.atychia.desktop DESTINATION ${KDE_INSTALL_APPDIR})
+install(FILES org.filotimo.atychia-restart-plasmashell.desktop DESTINATION ${KDE_INSTALL_APPDIR})
 # Register shortcuts with KGlobalAccel
 file(CREATE_LINK ${KDE_INSTALL_FULL_APPDIR}/filotimo.atychia.desktop ${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/filotimo.atychia.desktop SYMBOLIC)
+file(CREATE_LINK ${KDE_INSTALL_FULL_APPDIR}/filotimo.atychia-restart-plasmashell.desktop ${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/filotimo.atychia-restart-plasmashell.desktop SYMBOLIC)
+
 install(FILES org.filotimo.atychia-launch.policy DESTINATION ${KDE_INSTALL_FULL_DATAROOTDIR}/polkit-1/actions)
 install(FILES 99-filotimo-atychia.rules DESTINATION ${KDE_INSTALL_FULL_SYSCONFDIR}/polkit-1/rules.d)
 

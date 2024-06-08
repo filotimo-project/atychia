@@ -3,4 +3,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck973564@gmail.com>
 
-@KDE_INSTALL_FULL_BINDIR@/systemctl --user restart plasma-plasmashell
+@KDE_INSTALL_FULL_BINDIR@/systemctl --user stop plasma-plasmashell
+@KDE_INSTALL_FULL_BINDIR@/systemctl --user start plasma-plasmashell

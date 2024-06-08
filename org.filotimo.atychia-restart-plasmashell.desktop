@@ -1,0 +1,21 @@
+[Desktop Entry]
+Categories=Qt;KDE;System;
+Comment[en_AU]=A shortcut to restart the KDE Plasma Shell
+Comment=A shortcut to restart the KDE Plasma Shell
+Exec=atychia-restart-plasmashell
+GenericName[en_AU]=
+GenericName=
+Icon=system-help
+MimeType=
+Name[en_AU]=Restart Plasma Shell
+Name=Restart Plasma Shell
+NoDisplay=yes
+Path=
+PrefersNonDefaultGPU=false
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-KDE-Shortcuts=Meta+Ctrl+Shift+B
+X-KDE-SubstituteUID=false
+X-KDE-Username=
