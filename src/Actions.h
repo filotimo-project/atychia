@@ -14,7 +14,7 @@ class Actions : public QObject
 {
     Q_OBJECT
 
-    void returnToTTYNumber(uint32_t ttyNum) const;
+    void returnToTTYNumberAndQuit(uint32_t ttyNum) const;
     void showErrorMessage(QString name, QString message) const;
 
 public:
@@ -25,7 +25,7 @@ public:
     uint32_t seatNumber;
 
     // "public slots:" doesn't work
-    Q_SLOT void returnToTTYAndQuit() const;
+    Q_SLOT void returnToPrevTTYAndQuit() const;
     Q_SLOT void logout() const;
     Q_SLOT void shutdown() const;
     Q_SLOT void reboot() const;

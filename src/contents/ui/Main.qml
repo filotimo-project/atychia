@@ -115,7 +115,7 @@ Kirigami.ApplicationWindow {
                         Layout.columnSpan: 2
                         text: actionName
                         onClicked: switch (actionName) { // TODO: This should be in the ListElement somehow
-                            case "Return": Actions.returnToTTYAndQuit(); break;
+                            case "Return": Actions.returnToPrevTTYAndQuit(); break;
                             case "Log out": Actions.logout(); break;
                             case "Shut down": Actions.shutdown(); break;
                             case "Reboot": Actions.reboot(); break;

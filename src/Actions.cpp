@@ -12,7 +12,9 @@
 #include <QDBusPendingReply>
 #include <QMessageBox>
 #include <QProcess>
+#include <QThread>
 #include <csignal>
+#include <unistd.h>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -24,23 +26,16 @@ Actions::Actions(QObject *parent, uint32_t tty_number, uint32_t user_uid, uint32
     seatNumber = seat_number;
 }
 
-void Actions::returnToTTYNumber(uint32_t ttyNum) const
+void Actions::returnToTTYNumberAndQuit(uint32_t ttyNum) const
 {
     QDBusInterface logind{u"org.freedesktop.login1"_s,
                           u"/org/freedesktop/login1/seat/seat%1"_s.arg(seatNumber),
                           u"org.freedesktop.login1.Seat"_s,
                           QDBusConnection::systemBus()};
 
-    const auto message = logind.callWithArgumentList(QDBus::Block, u"SwitchTo"_s, {ttyNum});
-    QDBusPendingReply<QString> switchedVt = message;
+    logind.callWithArgumentList(QDBus::Block, u"SwitchTo"_s, {ttyNum});
 
-    Q_ASSERT(switchedVt.isFinished());
-    if (switchedVt.isError()) {
-        const auto error = switchedVt.error();
-        qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
-        showErrorMessage(error.name(), error.message());
-        return;
-    }
+    QCoreApplication::quit();
 }
 
 void Actions::showErrorMessage(QString name, QString message) const
@@ -48,12 +43,14 @@ void Actions::showErrorMessage(QString name, QString message) const
     QMessageBox messageBox;
     messageBox.critical(nullptr, name, message);
     messageBox.setFixedSize(400, 200);
+    // Don't linger around, allow app to quit if there was an error but chvt still succeeded
+    QThread::sleep(10);
+    messageBox.close();
 }
 
-void Actions::returnToTTYAndQuit() const
+void Actions::returnToPrevTTYAndQuit() const
 {
-    returnToTTYNumber(ttyNumber);
-    QCoreApplication::quit();
+    returnToTTYNumberAndQuit(ttyNumber);
 }
 
 void Actions::logout() const
@@ -75,8 +72,7 @@ void Actions::logout() const
         return;
     }
 
-    returnToTTYNumber(1);
-    QCoreApplication::quit();
+    returnToTTYNumberAndQuit(1);
 }
 
 void Actions::shutdown() const
