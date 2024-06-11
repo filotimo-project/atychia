@@ -67,10 +67,9 @@ void Actions::logout() const
         const auto error = killedUser.error();
         qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
         showErrorMessage(error.name(), error.message());
-        return;
     }
 
-    returnToTTYNumberAndQuit(1);
+    QCoreApplication::exit(0);
 }
 
 void Actions::shutdown() const
