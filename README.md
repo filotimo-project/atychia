@@ -15,7 +15,7 @@ Also requires `cage`, the Wayland kiosk compositor, to be installed.
 
 You can build and install this with the following:
 ```
-mkdir build && cd build
+mkdir -p build && cd build
 sudo cmake .. -G "Kate - Ninja" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 sudo ninja-build -C . install
 ```
