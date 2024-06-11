@@ -35,7 +35,7 @@ void Actions::returnToTTYNumberAndQuit(uint32_t ttyNum) const
 
     logind.callWithArgumentList(QDBus::Block, u"SwitchTo"_s, {ttyNum});
 
-    QCoreApplication::quit();
+    QCoreApplication::exit(0);
 }
 
 void Actions::showErrorMessage(QString name, QString message) const
@@ -43,9 +43,7 @@ void Actions::showErrorMessage(QString name, QString message) const
     QMessageBox messageBox;
     messageBox.critical(nullptr, name, message);
     messageBox.setFixedSize(400, 200);
-    // Don't linger around, allow app to quit if there was an error but chvt still succeeded
-    QThread::sleep(10);
-    messageBox.close();
+    messageBox.show();
 }
 
 void Actions::returnToPrevTTYAndQuit() const
