@@ -1,4 +1,5 @@
-# Copyright (C) 2024 Thomas Duckworth
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Thomas Duckworth
 # This file is distributed under the same license as the org.filotimo.atychia package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -7,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.filotimo.atychia 0.1\n"
 "Report-Msgid-Bugs-To: tduck973564@gmail.com\n"
-"POT-Creation-Date: 2024-06-09 03:40+1000\n"
+"POT-Creation-Date: 2024-06-11 18:45+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,21 +39,37 @@ msgid ""
 "keyboard navigation."
 msgstr ""
 
-#: src/Actions.cpp:42 src/Actions.cpp:72 src/Actions.cpp:89 src/Actions.cpp:101
-#: src/Actions.cpp:118 src/Actions.cpp:130 src/Actions.cpp:147
-#: src/Actions.cpp:161 src/Actions.cpp:172
+#: src/Actions.cpp:70 src/Actions.cpp:87 src/Actions.cpp:100
+#: src/Actions.cpp:119 src/Actions.cpp:132 src/Actions.cpp:151
+#: src/Actions.cpp:166 src/Actions.cpp:178
 #, kde-format
 msgid "Asynchronous call finished with error: %1 (%2)"
 msgstr ""
 
-#: src/Actions.cpp:105
+#: src/Actions.cpp:105 src/Actions.cpp:106
 #, kde-format
 msgid "poweroff"
 msgstr ""
 
-#: src/Actions.cpp:134 src/Actions.cpp:176
+#: src/Actions.cpp:106
+#, kde-format
+msgid "Can't power off: CanPowerOff() result is %1"
+msgstr ""
+
+#: src/Actions.cpp:137 src/Actions.cpp:138 src/Actions.cpp:183
+#: src/Actions.cpp:184
 #, kde-format
 msgid "reboot"
+msgstr ""
+
+#: src/Actions.cpp:138
+#, kde-format
+msgid "Can't reboot: CanReboot() result is %1"
+msgstr ""
+
+#: src/Actions.cpp:184
+#, kde-format
+msgid "Can't reboot to firmware setup: CanRebootToFirmwareSetup() result is %1"
 msgstr ""
 
 #: src/main.cpp:40

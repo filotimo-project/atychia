@@ -7,13 +7,36 @@ import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
 import org.filotimo.atychia
 
+
 Kirigami.ApplicationWindow {
     id: root
+    objectName: "mainWindow"
 
-    minimumWidth: Kirigami.Units.gridUnit * 20
-    minimumHeight: Kirigami.Units.gridUnit * 20
+    minimumWidth: Kirigami.Units.gridUnit * 35
+    minimumHeight: Kirigami.Units.gridUnit * 35
 
-    onClosing: Actions.returnToTTYAndQuit();
+    // Error handling - I don't know how bad of an idea this is, but if it works, it works
+    Connections {
+        target: Actions
+        function onErrorOccured(name, description) {
+            errorDialog.title = name;
+            errorDialog.subtitle = description;
+
+            errorDialog.open()
+        }
+    }
+    Kirigami.PromptDialog {
+        id: errorDialog
+        standardButtons: Kirigami.Dialog.Ok
+
+        onAccepted: {
+            errorDialog.title = ""
+            errorDialog.subtitle = ""
+            errorDialog.close()
+        }
+    }
+
+    onClosing: Actions.returnToPrevTTYAndQuit();
 
     globalDrawer: Kirigami.GlobalDrawer {
         isMenu: !Kirigami.Settings.isMobile
@@ -22,12 +45,16 @@ Kirigami.ApplicationWindow {
                 text: i18n("About Desktop Recovery")
                 icon.name: "help-about"
                 onTriggered: root.pageStack.pushDialogLayer(Qt.resolvedUrl("About.qml"))
+                Keys.onEnterPressed: root.pageStack.pushDialogLayer(Qt.resolvedUrl("About.qml"))
+                Keys.onReturnPressed: root.pageStack.pushDialogLayer(Qt.resolvedUrl("About.qml"))
             },
             Kirigami.Action {
                 text: i18n("Quit")
                 icon.name: "application-exit"
                 shortcut: StandardKey.Quit
-                onTriggered: Actions.returnToTTYAndQuit()
+                onTriggered: Actions.returnToPrevTTYAndQuit()
+                Keys.onEnterPressed: Actions.returnToPrevTTYAndQuit()
+                Keys.onReturnPressed: Actions.returnToPrevTTYAndQuit()
             }
         ]
     }
@@ -42,15 +69,22 @@ Kirigami.ApplicationWindow {
             iconSource: "plasmashell"
         }
         ListElement {
+            // TODO: Make this terminal-emulator-agnostic
+            actionName: "Launch terminal"
+            name: "Open a terminal window"
+            description: "Opens a Konsole window that allows you to log in and execute commands."
+            iconSource: "utilities-terminal"
+        }
+        ListElement {
             actionName: "Log out"
             name: "Log out of current user"
             description: "Immediately logs out of current user. All unsaved work will be lost."
             iconSource: "system-log-out"
         }
         ListElement {
-            actionName: "Shut down"
-            name: "Shutdown computer"
-            description: "Immediately shuts down computer. All unsaved work will be lost."
+            actionName: "Power off"
+            name: "Power off computer"
+            description: "Immediately powers off computer. All unsaved work will be lost."
             iconSource: "system-shutdown"
         }
         ListElement {
@@ -65,18 +99,21 @@ Kirigami.ApplicationWindow {
             description: "Immediately reboots to Firmware Setup. All unsaved work will be lost."
             iconSource: "cpu"
         }
-        ListElement {
-            // TODO: Make this terminal-emulator-agnostic
-            actionName: "Launch terminal"
-            name: "Open a terminal window"
-            description: "Opens a Konsole window that allows you to log in and execute commands."
-            iconSource: "utilities-terminal"
-        }
     }
 
     Component {
         id: actionsDelegate
         Kirigami.AbstractCard {
+            function canDoAction() {
+                switch (actionName) {
+                    case "Power off": return Actions.canDoAction(Actions.CheckableAction.PowerOff);
+                    case "Reboot": return Actions.canDoAction(Actions.CheckableAction.Reboot);
+                    case "Reboot to setup": return Actions.canDoAction(Actions.CheckableAction.RebootToFirmwareSetup);
+                    default: return true;
+                }
+            }
+            visible: canDoAction()
+
             contentItem: Item {
                 implicitWidth: delegateLayout.implicitWidth
                 implicitHeight: delegateLayout.implicitHeight
@@ -98,7 +135,6 @@ Kirigami.ApplicationWindow {
                     }
                     ColumnLayout {
                         Kirigami.Heading {
-                            level: 2
                             text: i18n(name)
                         }
                         Kirigami.Separator {
@@ -114,14 +150,21 @@ Kirigami.ApplicationWindow {
                         Layout.alignment: Qt.AlignRight|Qt.AlignVCenter
                         Layout.columnSpan: 2
                         text: actionName
-                        onClicked: switch (actionName) { // TODO: This should be in the ListElement somehow
-                            case "Return": Actions.returnToPrevTTYAndQuit(); break;
-                            case "Log out": Actions.logout(); break;
-                            case "Shut down": Actions.shutdown(); break;
-                            case "Reboot": Actions.reboot(); break;
-                            case "Reboot to setup": Actions.rebootToFirmwareSetup(); break;
-                            case "Launch terminal": Actions.launchKonsole(); break;
+
+                        function activate() {
+                            switch (actionName) { // TODO: This should be in the ListElement somehow
+                                case "Return": Actions.returnToPrevTTYAndQuit(); break;
+                                case "Log out": Actions.logout(); break;
+                                case "Power off": Actions.powerOff(); break;
+                                case "Reboot": Actions.reboot(); break;
+                                case "Reboot to setup": Actions.rebootToFirmwareSetup(); break;
+                                case "Launch terminal": Actions.launchKonsole(); break;
+                            }
                         }
+
+                        onClicked: activate()
+                        Keys.onEnterPressed: activate()
+                        Keys.onReturnPressed: activate()
                     }
                 }
             }
@@ -135,16 +178,16 @@ Kirigami.ApplicationWindow {
 
         title: i18n("Desktop Recovery")
 
+        header: Kirigami.InlineViewHeader {
+            width: listView.width
+            text: i18n("Hold Alt and press underlined letters on buttons with the keyboard for keyboard navigation.")
+        }
+
         Kirigami.CardsListView {
             keyNavigationEnabled: true
             id: listView
             model: actionsModel
             delegate: actionsDelegate
-
-            header: Kirigami.InlineViewHeader {
-                width: listView.width
-                text: i18n("Hold Alt and press underlined letters on buttons with the keyboard for keyboard navigation.")
-            }
         }
     }
 }

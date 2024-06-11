@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # SPDX-License-Identifier: GPL-2.0-or-later
 # SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck973564@gmail.com>
 
@@ -28,6 +27,20 @@ echo "seat_num:     $seat_num"
 # Suppress `atychiarc is not writable` error on launch
 sudo install -g atychia -o atychia -d /home/atychia/
 
+# Check for required components
+if ! getent passwd atychia > /dev/null 2>&1; then
+    kdialog --error "The \`atychia\` user does not exist, therefore Atychia cannot be launched.\nPlease open an issue at \`https://github.com/filotimo-linux/atychia\`.\n\nTo restart plasmashell, press Meta+Ctrl+Shift+B." --title "Error"
+    exit 1
+fi
+if ! command -v cage &> /dev/null; then
+    kdialog --error "The \`cage\` compositor is not installed, therefore Atychia cannot be launched.\nPlease open an issue at \`https://github.com/filotimo-linux/atychia\`.\n\nTo restart plasmashell, press Meta+Ctrl+Shift+B." --title "Error"
+    exit 1
+fi
+if [ -z "$prev_tty" ] || [ -z "$prev_tty_num" ] || [ -z "$free_tty" ] || [ -z "$uid" ] || [ -z "$seat_num" ]; then
+    kdialog --error "Values required for Atychia to start could not be generated, therefore Atychia cannot be launched.\nPlease open an issue at \`https://github.com/filotimo-linux/atychia\`.\n\nTo restart plasmashell, press Meta+Ctrl+Shift+B." --title "Error"
+    exit 1
+fi
+
 sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
     --property PAMName=login \
     --property User="atychia" \
@@ -37,5 +50,4 @@ sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
     --property TTYVHangup=yes \
     --property Environment="XCURSOR_THEME=breeze_cursors" \
     --property Environment="WLR_NO_HARDWARE_CURSORS=1" \
-    sh -c "cage -dsm last -- @KDE_INSTALL_FULL_BINDIR@/atychia $prev_tty_num $uid $seat_num || chvt $(echo $prev_tty | cut -c 4-)"
-
+    bash -c "cage -dsm last -- @KDE_INSTALL_FULL_BINDIR@/atychia $prev_tty_num $uid $seat_num || chvt $prev_tty_num"
