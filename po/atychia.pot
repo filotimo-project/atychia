@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: org.filotimo.atychia 0.1\n"
 "Report-Msgid-Bugs-To: tduck973564@gmail.com\n"
-"POT-Creation-Date: 2024-06-11 18:45+1000\n"
+"POT-Creation-Date: 2024-06-11 22:52+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,59 +17,60 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: build/src/contents/ui/Main.qml:22 src/contents/ui/Main.qml:22
+#: build/src/contents/ui/Main.qml:45 src/contents/ui/Main.qml:45
 #, kde-format
 msgid "About Desktop Recovery"
 msgstr ""
 
-#: build/src/contents/ui/Main.qml:27 src/contents/ui/Main.qml:27
+#: build/src/contents/ui/Main.qml:52 src/contents/ui/Main.qml:52
 #, kde-format
 msgid "Quit"
 msgstr ""
 
-#: build/src/contents/ui/Main.qml:136 src/contents/ui/Main.qml:136
+#: build/src/contents/ui/Main.qml:179 src/contents/ui/Main.qml:179
 #, kde-format
 msgid "Desktop Recovery"
 msgstr ""
 
-#: build/src/contents/ui/Main.qml:146 src/contents/ui/Main.qml:146
+#: build/src/contents/ui/Main.qml:183 src/contents/ui/Main.qml:183
 #, kde-format
 msgid ""
 "Hold Alt and press underlined letters on buttons with the keyboard for "
 "keyboard navigation."
 msgstr ""
 
-#: src/Actions.cpp:70 src/Actions.cpp:87 src/Actions.cpp:100
-#: src/Actions.cpp:119 src/Actions.cpp:132 src/Actions.cpp:151
-#: src/Actions.cpp:166 src/Actions.cpp:178
+#: src/Actions.cpp:68 src/Actions.cpp:101 src/Actions.cpp:122
+#: src/Actions.cpp:148 src/Actions.cpp:176 src/Actions.cpp:189
 #, kde-format
 msgid "Asynchronous call finished with error: %1 (%2)"
 msgstr ""
 
-#: src/Actions.cpp:105 src/Actions.cpp:106
+#: src/Actions.cpp:130 src/Actions.cpp:131
 #, kde-format
 msgid "poweroff"
 msgstr ""
 
-#: src/Actions.cpp:106
+#: src/Actions.cpp:131
 #, kde-format
-msgid "Can't power off: CanPowerOff() result is %1"
+msgid "Can't power off: canDoAction(PowerOff) result is false"
 msgstr ""
 
-#: src/Actions.cpp:137 src/Actions.cpp:138 src/Actions.cpp:183
-#: src/Actions.cpp:184
+#: src/Actions.cpp:156 src/Actions.cpp:157 src/Actions.cpp:197
+#: src/Actions.cpp:198
 #, kde-format
 msgid "reboot"
 msgstr ""
 
-#: src/Actions.cpp:138
+#: src/Actions.cpp:157
 #, kde-format
-msgid "Can't reboot: CanReboot() result is %1"
+msgid "Can't reboot: canDoAction(Reboot) result is false"
 msgstr ""
 
-#: src/Actions.cpp:184
+#: src/Actions.cpp:198
 #, kde-format
-msgid "Can't reboot to firmware setup: CanRebootToFirmwareSetup() result is %1"
+msgid ""
+"Can't reboot to firmware setup: canDoAction(RebootToFirmwareSetup) result is "
+"false"
 msgstr ""
 
 #: src/main.cpp:40
