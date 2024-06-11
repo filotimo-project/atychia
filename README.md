@@ -10,12 +10,12 @@ Keyboard navigation needs to be worked on to make this foolproof as well as a po
 
 Requires a system user `atychia` (UID below 1000, and no home dir) which is in the `atychia` and `video` group.
 You can make this with `sudo useradd -r atychia && sudo usermod -a -G video atychia`.
-
 Requires an up to date version of KDE Frameworks 6, Qt 6, systemd, logind, and Polkit.
+Also requires `cage`, the Wayland kiosk compositor, to be installed.
 
 You can build and install this with the following:
 ```
 mkdir build && cd build
-cmake .. -G "Kate - Ninja" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+sudo cmake .. -G "Kate - Ninja" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 sudo ninja-build -C . install
 ```
