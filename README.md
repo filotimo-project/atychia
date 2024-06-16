@@ -22,3 +22,4 @@ sudo ninja-build -C . install
 ## TODO
 - Proper integrated i18n, automated within GitHub Actions. I don't know how to do this but it would be good to have this consistent across all upcoming Filotimo applications.
 - TUI launched in the event that a Wayland session can't be run - this also requires some way to get to Atychia from a TTY (libevdev daemon?)
+- Package this
