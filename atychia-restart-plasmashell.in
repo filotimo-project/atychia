@@ -4,5 +4,5 @@
 # SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck973564@gmail.com>
 @KDE_INSTALL_FULL_BINDIR@/systemctl --user stop plasma-plasmashell
 sleep 3
-@KDE_INSTALL_FULL_BINDIR@/systemctl --user is-active --quiet plasma-plasmashell || @KDE_INSTALL_FULL_BINDIR@/systemctl --user kill -s SIGKILL plasma-plasmashell
+@KDE_INSTALL_FULL_BINDIR@/systemctl --user is-active --quiet plasma-plasmashell || kill -9 "$(@KDE_INSTALL_FULL_BINDIR@/systemctl --user show --property MainPID --value plasma-plasmashell)"
 @KDE_INSTALL_FULL_BINDIR@/systemctl --user start plasma-plasmashell
