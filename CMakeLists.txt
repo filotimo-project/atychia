@@ -63,7 +63,7 @@ file(CREATE_LINK ${KDE_INSTALL_FULL_APPDIR}/filotimo.atychia.desktop ${KDE_INSTA
 file(CREATE_LINK ${KDE_INSTALL_FULL_APPDIR}/filotimo.atychia-restart-plasmashell.desktop ${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/filotimo.atychia-restart-plasmashell.desktop SYMBOLIC)
 
 install(FILES org.filotimo.atychia-launch.policy DESTINATION ${KDE_INSTALL_FULL_DATAROOTDIR}/polkit-1/actions)
-install(FILES 99-filotimo-atychia.rules DESTINATION ${KDE_INSTALL_FULL_SYSCONFDIR}/polkit-1/rules.d)
+install(FILES 99-filotimo-atychia.rules DESTINATION ${KDE_INSTALL_FULL_DATAROOTDIR}/polkit-1/rules.d)
 
 install(PROGRAMS atychia-launch DESTINATION ${KDE_INSTALL_FULL_BINDIR})
 install(PROGRAMS atychia-restart-plasmashell DESTINATION ${KDE_INSTALL_FULL_BINDIR})
