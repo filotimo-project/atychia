@@ -72,15 +72,10 @@ file(
   ${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/org.filotimolinux.atychia-restart-plasmashell.desktop
   SYMBOLIC)
 
-<<<<<<< HEAD
-install(FILES org.filotimo.atychia-launch.policy DESTINATION ${KDE_INSTALL_FULL_DATAROOTDIR}/polkit-1/actions)
-install(FILES 99-filotimo-atychia.rules DESTINATION ${KDE_INSTALL_FULL_DATAROOTDIR}/polkit-1/rules.d)
-=======
 install(FILES org.filotimolinux.atychia-launch.policy
         DESTINATION ${KDE_INSTALL_FULL_DATAROOTDIR}/polkit-1/actions)
 install(FILES 99-filotimo-atychia.rules
-        DESTINATION ${KDE_INSTALL_FULL_SYSCONFDIR}/polkit-1/rules.d)
->>>>>>> f244791 (Change application domain to match future web domain)
+        DESTINATION ${KDE_INSTALL_FULL_DATAROOTDIR}/polkit-1/rules.d)
 
 install(PROGRAMS atychia-launch DESTINATION ${KDE_INSTALL_FULL_BINDIR})
 install(PROGRAMS atychia-restart-plasmashell
