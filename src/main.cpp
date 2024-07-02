@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    qmlRegisterSingletonInstance<Actions>("org.filotimo.atychia", 1, 0, "Actions", &actions);
+    qmlRegisterSingletonInstance<Actions>("org.filotimolinux.atychia", 1, 0, "Actions", &actions);
 
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.loadFromModule("org.filotimolinux.atychia", u"Main");
