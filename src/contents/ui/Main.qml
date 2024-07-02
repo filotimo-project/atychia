@@ -5,7 +5,7 @@ import QtQuick
 import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
-import org.filotimo.atychia
+import org.filotimolinux.atychia
 
 
 Kirigami.ApplicationWindow {
@@ -21,7 +21,6 @@ Kirigami.ApplicationWindow {
         function onErrorOccured(name, description) {
             errorDialog.title = name;
             errorDialog.subtitle = description;
-
             errorDialog.open()
         }
     }

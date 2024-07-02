@@ -4,7 +4,7 @@
 # Target: static library
 qt_add_qml_module(atychia_static
     STATIC
-    URI org.filotimo.atychia
+    URI org.filotimolinux.atychia
     VERSION 1.0
     QML_FILES
         contents/ui/Main.qml

@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
         QQuickStyle::setStyle(u"org.kde.desktop"_s);
     }
-    KLocalizedString::setApplicationDomain("atychia.org");
+    KLocalizedString::setApplicationDomain("atychia");
     QCoreApplication::setOrganizationName(u"Filotimo"_s);
 
     KAboutData aboutData(
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonInstance<Actions>("org.filotimo.atychia", 1, 0, "Actions", &actions);
 
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
-    engine.loadFromModule("org.filotimo.atychia", u"Main");
+    engine.loadFromModule("org.filotimolinux.atychia", u"Main");
 
     if (engine.rootObjects().isEmpty()) {
         return -1;
