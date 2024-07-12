@@ -7,6 +7,6 @@ Exec=atychia-restart-plasmashell
 Icon=system-help
 Type=Application
 Terminal=false
-NoDisplay=yes
+NoDisplay=true
 Categories=Qt;KDE;System;
 X-KDE-Shortcuts=Meta+Ctrl+Shift+B
