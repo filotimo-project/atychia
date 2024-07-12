@@ -68,19 +68,21 @@ install(FILES org.filotimolinux.atychia-restart-plasmashell.desktop
         DESTINATION ${KDE_INSTALL_APPDIR})
 
 # Register shortcuts with KGlobalAccel
-install(CODE "file(CREATE_LINK ${KDE_INSTALL_FULL_APPDIR}/org.filotimolinux.atychia.desktop ${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/org.filotimolinux.atychia.desktop SYMBOLIC)")
-install(CODE "file(CREATE_LINK ${KDE_INSTALL_FULL_APPDIR}/org.filotimolinux.atychia-restart-plasmashell.desktop ${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/org.filotimolinux.atychia-restart-plasmashell.desktop)")
+install(FILES org.filotimolinux.atychia.desktop
+        DESTINATION ${KDE_INSTALL_DATAROOTDIR}/kglobalaccel)
+install(FILES org.filotimolinux.atychia-restart-plasmashell.desktop
+        DESTINATION ${KDE_INSTALL_DATAROOTDIR}/kglobalaccel)
 
 install(FILES org.filotimolinux.atychia-launch.policy
-        DESTINATION ${KDE_INSTALL_FULL_DATAROOTDIR}/polkit-1/actions)
+        DESTINATION ${KDE_INSTALL_DATAROOTDIR}/polkit-1/actions)
 install(FILES 99-filotimo-atychia.rules
-        DESTINATION ${KDE_INSTALL_FULL_DATAROOTDIR}/polkit-1/rules.d)
+        DESTINATION ${KDE_INSTALL_DATAROOTDIR}/polkit-1/rules.d)
 
-install(PROGRAMS atychia-launch DESTINATION ${KDE_INSTALL_FULL_BINDIR})
+install(PROGRAMS atychia-launch DESTINATION ${KDE_INSTALL_BINDIR})
 install(PROGRAMS atychia-restart-plasmashell
-        DESTINATION ${KDE_INSTALL_FULL_BINDIR})
+        DESTINATION ${KDE_INSTALL_BINDIR})
 install(PROGRAMS atychia-interactive-su
-        DESTINATION ${KDE_INSTALL_FULL_LIBEXECDIR})
+        DESTINATION ${KDE_INSTALl_LIBEXECDIR})
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES
                          FATAL_ON_MISSING_REQUIRED_PACKAGES)
