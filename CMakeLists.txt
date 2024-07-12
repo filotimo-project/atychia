@@ -82,7 +82,7 @@ install(PROGRAMS atychia-launch DESTINATION ${KDE_INSTALL_BINDIR})
 install(PROGRAMS atychia-restart-plasmashell
         DESTINATION ${KDE_INSTALL_BINDIR})
 install(PROGRAMS atychia-interactive-su
-        DESTINATION ${KDE_INSTALl_LIBEXECDIR})
+        DESTINATION ${KDE_INSTALL_LIBEXECDIR})
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES
                          FATAL_ON_MISSING_REQUIRED_PACKAGES)
