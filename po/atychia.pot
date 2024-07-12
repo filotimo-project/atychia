@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Thomas Duckworth
-# This file is distributed under the same license as the org.filotimo.atychia package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: org.filotimo.atychia 0.1\n"
-"Report-Msgid-Bugs-To: tduck973564@gmail.com\n"
-"POT-Creation-Date: 2024-06-11 22:52+1000\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: https://github.com/filotimo-linux/atychia\n"
+"POT-Creation-Date: 2024-07-12 23:14+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,26 +17,38 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: build/src/contents/ui/Main.qml:45 src/contents/ui/Main.qml:45
+#: build/src/contents/ui/Main.qml:44 src/contents/ui/Main.qml:44
 #, kde-format
 msgid "About Desktop Recovery"
 msgstr ""
 
-#: build/src/contents/ui/Main.qml:52 src/contents/ui/Main.qml:52
+#: build/src/contents/ui/Main.qml:51 src/contents/ui/Main.qml:51
 #, kde-format
 msgid "Quit"
 msgstr ""
 
-#: build/src/contents/ui/Main.qml:179 src/contents/ui/Main.qml:179
+#: build/src/contents/ui/Main.qml:178 src/contents/ui/Main.qml:178
 #, kde-format
 msgid "Desktop Recovery"
 msgstr ""
 
-#: build/src/contents/ui/Main.qml:183 src/contents/ui/Main.qml:183
+#: build/src/contents/ui/Main.qml:182 src/contents/ui/Main.qml:182
 #, kde-format
 msgid ""
 "Hold Alt and press underlined letters on buttons with the keyboard for "
 "keyboard navigation."
+msgstr ""
+
+#: po/rc.cpp:1 src/main.cpp:53 rc.cpp:1
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
+msgstr ""
+
+#: po/rc.cpp:2 src/main.cpp:53 rc.cpp:2
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
 msgstr ""
 
 #: src/Actions.cpp:68 src/Actions.cpp:101 src/Actions.cpp:122
@@ -101,18 +113,6 @@ msgstr ""
 #, kde-format
 msgctxt "@info:credit"
 msgid "Author"
-msgstr ""
-
-#: src/main.cpp:53
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr ""
-
-#: src/main.cpp:53
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
 msgstr ""
 
 #: src/main.cpp:63

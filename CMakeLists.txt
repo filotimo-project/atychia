@@ -57,6 +57,11 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/atychia-launch.in
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/atychia-restart-plasmashell.in
                ${CMAKE_CURRENT_SOURCE_DIR}/atychia-restart-plasmashell @ONLY)
 
+# i18n
+# https://techbase.kde.org/Development/Tutorials/Localization/i18n_Build_Systems/Outside_KDE_repositories
+add_subdirectory(po)
+
+# Install desktop files
 install(FILES org.filotimolinux.atychia.desktop
         DESTINATION ${KDE_INSTALL_APPDIR})
 install(FILES org.filotimolinux.atychia-restart-plasmashell.desktop
@@ -81,11 +86,11 @@ install(PROGRAMS atychia-restart-plasmashell
 install(PROGRAMS atychia-interactive-su
         DESTINATION ${KDE_INSTALL_FULL_LIBEXECDIR})
 
-ki18n_install(po)
-
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES
                          FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
 file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES src/*.cpp src/*.h)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
+
+ki18n_install(KF_SKIP_PO_PROCESSING po)
