@@ -68,12 +68,8 @@ install(FILES org.filotimolinux.atychia-restart-plasmashell.desktop
         DESTINATION ${KDE_INSTALL_APPDIR})
 
 # Register shortcuts with KGlobalAccel
-macro(install_symlink filepath sympath)
-    install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ${filepath} ${sympath})")
-    install(CODE "message(\"-- Created symlink: ${sympath} -> ${filepath}\")")
-endmacro(install_symlink)
-install_symlink(${KDE_INSTALL_FULL_APPDIR}/org.filotimolinux.atychia.desktop ${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/org.filotimolinux.atychia.desktop)
-install_symlink(${KDE_INSTALL_FULL_APPDIR}/org.filotimolinux.atychia-restart-plasmashell.desktop ${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/org.filotimolinux.atychia-restart-plasmashell.desktop)
+install(CODE "file(CREATE_LINK ${KDE_INSTALL_FULL_APPDIR}/org.filotimolinux.atychia.desktop ${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/org.filotimolinux.atychia.desktop SYMBOLIC)")
+install(CODE "file(CREATE_LINK ${KDE_INSTALL_FULL_APPDIR}/org.filotimolinux.atychia-restart-plasmashell.desktop ${KDE_INSTALL_FULL_DATAROOTDIR}/kglobalaccel/org.filotimolinux.atychia-restart-plasmashell.desktop)")
 
 install(FILES org.filotimolinux.atychia-launch.policy
         DESTINATION ${KDE_INSTALL_FULL_DATAROOTDIR}/polkit-1/actions)
