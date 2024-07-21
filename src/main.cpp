@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
         QQuickStyle::setStyle(u"org.kde.desktop"_s);
     }
     KLocalizedString::setApplicationDomain("atychia");
-    QCoreApplication::setOrganizationName(u"Filotimo"_s);
+    QCoreApplication::setOrganizationName(u"Filotimo Project"_s);
 
     KAboutData aboutData(
         // The program name used internally.
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     aboutData.addAuthor(i18nc("@info:credit", "Thomas Duckworth"),
                         i18nc("@info:credit", "Author"),
                         u"tduck973564@gmail.com"_s,
-                        u"https://github.com/filotimo-linux"_s);
+                        u"https://github.com/filotimo-project"_s);
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
     KAboutData::setApplicationData(aboutData);
     QGuiApplication::setWindowIcon(QIcon::fromTheme(u"system-help"_s));
@@ -75,10 +75,10 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    qmlRegisterSingletonInstance<Actions>("org.filotimolinux.atychia", 1, 0, "Actions", &actions);
+    qmlRegisterSingletonInstance<Actions>("org.filotimoproject.atychia", 1, 0, "Actions", &actions);
 
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
-    engine.loadFromModule("org.filotimolinux.atychia", u"Main");
+    engine.loadFromModule("org.filotimoproject.atychia", u"Main");
 
     if (engine.rootObjects().isEmpty()) {
         return -1;

@@ -51,7 +51,7 @@ add_subdirectory(src)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/directories.h.in
                ${CMAKE_CURRENT_SOURCE_DIR}/src/directories.h @ONLY)
 
-# Shell scripts
+# Shell scriptslinux
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/atychia-launch.in
                ${CMAKE_CURRENT_SOURCE_DIR}/atychia-launch @ONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/atychia-restart-plasmashell.in
@@ -62,18 +62,18 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/atychia-restart-plasmashell.in
 add_subdirectory(po)
 
 # Install desktop files
-install(FILES org.filotimolinux.atychia.desktop
+install(FILES org.filotimoproject.atychia.desktop
         DESTINATION ${KDE_INSTALL_APPDIR})
-install(FILES org.filotimolinux.atychia-restart-plasmashell.desktop
+install(FILES org.filotimoproject.atychia-restart-plasmashell.desktop
         DESTINATION ${KDE_INSTALL_APPDIR})
 
 # Register shortcuts with KGlobalAccel
-install(FILES org.filotimolinux.atychia.desktop
+install(FILES org.filotimoproject.atychia.desktop
         DESTINATION ${KDE_INSTALL_DATAROOTDIR}/kglobalaccel)
-install(FILES org.filotimolinux.atychia-restart-plasmashell.desktop
+install(FILES org.filotimoproject.atychia-restart-plasmashell.desktop
         DESTINATION ${KDE_INSTALL_DATAROOTDIR}/kglobalaccel)
 
-install(FILES org.filotimolinux.atychia-launch.policy
+install(FILES org.filotimoproject.atychia-launch.policy
         DESTINATION ${KDE_INSTALL_DATAROOTDIR}/polkit-1/actions)
 install(FILES 99-filotimo-atychia.rules
         DESTINATION ${KDE_INSTALL_DATAROOTDIR}/polkit-1/rules.d)

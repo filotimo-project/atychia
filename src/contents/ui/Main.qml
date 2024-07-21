@@ -5,7 +5,7 @@ import QtQuick
 import QtQuick.Controls as Controls
 import QtQuick.Layouts
 import org.kde.kirigami as Kirigami
-import org.filotimolinux.atychia
+import org.filotimoproject.atychia
 
 
 Kirigami.ApplicationWindow {
@@ -30,7 +30,7 @@ Kirigami.ApplicationWindow {
 
         onAccepted: {
             errorDialog.title = ""
-            errorDialog.subtitle = ""
+            errorDialog.subtitle = ""inu
             errorDialog.close()
         }
     }
