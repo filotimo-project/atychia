@@ -30,7 +30,7 @@ Kirigami.ApplicationWindow {
 
         onAccepted: {
             errorDialog.title = ""
-            errorDialog.subtitle = ""inu
+            errorDialog.subtitle = ""
             errorDialog.close()
         }
     }
