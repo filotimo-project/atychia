@@ -1,5 +1,7 @@
 # Atychia
 
+This is a POC (proof of concept/piece of crap).
+
 https://build.opensuse.org/package/show/home:tduck:filotimolinux/filotimo-atychia
 
 A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from a broken session, rather than being forced to a TTY.
