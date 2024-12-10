@@ -16,9 +16,13 @@
 #include "Actions.h"
 #include "version-atychia.h"
 #include <KAboutData>
+#include <KColorScheme>
+#include <KColorSchemeManager>
 #include <KLocalizedContext>
 #include <KLocalizedString>
+#include <QAbstractItemModel>
 #include <cstdint>
+#include <ksharedconfig.h>
 
 using namespace Qt::Literals::StringLiterals;
 
@@ -30,6 +34,10 @@ int main(int argc, char *argv[])
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
         QQuickStyle::setStyle(u"org.kde.desktop"_s);
     }
+
+    KColorSchemeManager *manager = KColorSchemeManager::instance();
+    QModelIndex index = manager->indexForScheme(u"Filotimo Dark"_s);
+    manager->activateScheme(index);
 
     KLocalizedString::setApplicationDomain("atychia");
     QCoreApplication::setOrganizationName(u"Filotimo Project"_s);

@@ -25,6 +25,7 @@ target_link_libraries(atychia_static PUBLIC
     Qt6::DBus
     KF6::I18n
     KF6::CoreAddons
+    KF6::ColorScheme
 )
 target_include_directories(atychia_static PUBLIC ${CMAKE_BINARY_DIR})
 

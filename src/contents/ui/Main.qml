@@ -15,6 +15,19 @@ Kirigami.ApplicationWindow {
     pageStack.initialPage: page
     pageStack.globalToolBar.style: Kirigami.ApplicationHeaderStyle.None
 
+    FocusScope {
+        anchors.fill: parent
+
+        Keys.onPressed: {
+            if (event.key === Qt.Key_Escape) {
+                Actions.returnToPrevTTYAndQuit();
+                event.accepted = true;
+            }
+
+        }
+
+    }
+
     // Error handling - I don't know how bad of an idea this is, but if it works, it works
     Connections {
         function onErrorOccured(name, description) {
@@ -206,6 +219,10 @@ Kirigami.ApplicationWindow {
     Kirigami.ScrollablePage {
         id: page
 
+        background: Rectangle {
+            color: "black"
+        }
+
         Item {
             anchors.centerIn: parent
             width: contentColumn.implicitWidth
@@ -226,6 +243,16 @@ Kirigami.ApplicationWindow {
                     delegate: actionsDelegate
                 }
 
+            }
+
+        }
+
+        ColumnLayout {
+            anchors.bottom: parent.bottom
+
+            Image {
+                Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
+                source: "file:///usr/share/plymouth/themes/filotimo/watermark.png"
             }
 
         }

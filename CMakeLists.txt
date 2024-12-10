@@ -40,7 +40,7 @@ find_package(
              DBus
              ${QT_EXTRA_COMPONENTS})
 find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS Kirigami CoreAddons
-                                                        I18n)
+                                                        I18n ColorScheme)
 
 qt_policy(SET QTP0001 NEW)
 

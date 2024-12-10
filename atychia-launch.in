@@ -46,4 +46,6 @@ sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
     --property TTYVHangup=yes \
     --property Environment="XCURSOR_THEME=breeze_cursors" \
     --property Environment="WLR_NO_HARDWARE_CURSORS=1" \
+    --property Environment="QT_QPA_PLATFORMTHEME=kde" \
+    --property Environment="XDG_CURRENT_DESKTOP=kde" \
     bash -c "cage -dsm last -- @KDE_INSTALL_FULL_BINDIR@/atychia $prev_tty_num $uid $seat_num || chvt $prev_tty_num"
