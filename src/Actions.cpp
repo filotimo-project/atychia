@@ -14,6 +14,7 @@
 #include <QProcess>
 #include <QThread>
 #include <csignal>
+#include <pwd.h>
 #include <unistd.h>
 
 using namespace Qt::Literals::StringLiterals;
@@ -201,7 +202,14 @@ void Actions::rebootToFirmwareSetup() const
 
 void Actions::launchKonsole() const
 {
-    QStringList args{u"-e"_s, u"$SHELL -c %1/atychia-interactive-su"_s.arg(QString::fromUtf8(LIBEXECDIR))};
+    struct passwd *pwd = getpwuid(userUid);
+    QStringList args{
+        u"--no-lockscreen"_s,
+        u"--no-global-shortcuts"_s,
+        u"--no-kactivities"_s,
+        u"--exit-with-session"_s,
+        u"/%1/konsole -e /%1/su - %2"_s.arg(QString::fromUtf8(BINDIR), QString::fromUtf8(pwd->pw_name)),
+    };
     QProcess process;
-    process.startDetached(u"%1/konsole"_s.arg(QString::fromUtf8(BINDIR)), args);
+    process.startDetached(u"/%1/kwin"_s.arg(QString::fromUtf8(BINDIR)), args);
 }

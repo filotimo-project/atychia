@@ -50,6 +50,7 @@ Kirigami.ApplicationWindow {
         id: actionsModel
 
         ListElement {
+            ident: "return"
             actionName: "Return"
             name: "Return to desktop"
             description: "Exits Desktop Recovery and returns to the desktop."
@@ -57,14 +58,7 @@ Kirigami.ApplicationWindow {
         }
 
         ListElement {
-            // TODO: Make this terminal-emulator-agnostic
-            actionName: "Launch"
-            name: "Open a terminal window"
-            description: "Opens a Konsole window that allows you to log in and execute commands."
-            iconSource: "utilities-terminal-symbolic"
-        }
-
-        ListElement {
+            ident: "logout"
             actionName: "Log out"
             name: "Log out of current user"
             description: "Immediately logs out of current user. All unsaved work will be lost."
@@ -72,6 +66,7 @@ Kirigami.ApplicationWindow {
         }
 
         ListElement {
+            ident: "poweroff"
             actionName: "Power off"
             name: "Power off computer"
             description: "Immediately powers off computer. All unsaved work will be lost."
@@ -79,6 +74,7 @@ Kirigami.ApplicationWindow {
         }
 
         ListElement {
+            ident: "reboot"
             actionName: "Reboot"
             name: "Reboot computer"
             description: "Immediately reboots computer. All unsaved work will be lost."
@@ -86,10 +82,20 @@ Kirigami.ApplicationWindow {
         }
 
         ListElement {
+            ident: "rebootfirmware"
             actionName: "Reboot"
             name: "Reboot to Firmware Setup"
             description: "Immediately reboots to Firmware Setup. All unsaved work will be lost."
             iconSource: "preferences-system-symbolic"
+        }
+
+        ListElement {
+            ident: "konsole"
+            // TODO: Make this terminal-emulator-agnostic
+            actionName: "Launch"
+            name: "Open a terminal window"
+            description: "Opens a Konsole window that logs into your account."
+            iconSource: "utilities-terminal-symbolic"
         }
 
     }
@@ -158,24 +164,24 @@ Kirigami.ApplicationWindow {
 
                     Controls.Button {
                         function activate() {
-                            switch (actionName) {
-                            case "Return":
+                            switch (ident) {
+                            case "return":
                                 // TODO: This should be in the ListElement somehow
                                 Actions.returnToPrevTTYAndQuit();
                                 break;
-                            case "Log out":
+                            case "logout":
                                 Actions.logout();
                                 break;
-                            case "Power off":
+                            case "poweroff":
                                 Actions.powerOff();
                                 break;
-                            case "Reboot":
+                            case "reboot":
                                 Actions.reboot();
                                 break;
-                            case "Reboot to setup":
+                            case "rebootfirmware":
                                 Actions.rebootToFirmwareSetup();
                                 break;
-                            case "Launch terminal":
+                            case "konsole":
                                 Actions.launchKonsole();
                                 break;
                             }

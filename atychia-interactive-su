@@ -1,6 +1,0 @@
-#!/bin/bash
-printf "Type 'exit' to close the window after logging in.\n\n"
-
-echo "Username:"
-read username
-su $username -

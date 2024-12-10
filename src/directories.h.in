@@ -7,6 +7,5 @@
 #define DIRECTORIES_H_IN
 
 #define BINDIR "@KDE_INSTALL_BINDIR@"
-#define LIBEXECDIR "@KDE_INSTALL_LIBEXECDIR@/kf6"
 
 #endif

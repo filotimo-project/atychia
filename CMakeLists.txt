@@ -3,7 +3,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-project(atychia VERSION 0.3)
+project(atychia VERSION 0.4)
 
 include(FeatureSummary)
 
@@ -81,8 +81,6 @@ install(FILES 99-filotimo-atychia.rules
 install(PROGRAMS atychia-launch DESTINATION ${KDE_INSTALL_BINDIR})
 install(PROGRAMS atychia-restart-plasmashell
         DESTINATION ${KDE_INSTALL_BINDIR})
-install(PROGRAMS atychia-interactive-su
-        DESTINATION ${KDE_INSTALL_LIBEXECDIR}/kf6)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES
                          FATAL_ON_MISSING_REQUIRED_PACKAGES)
