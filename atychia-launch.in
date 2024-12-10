@@ -14,9 +14,7 @@ free_tty=$(find -L /proc/[1-9]*/fd/. ! -name . -prune -type c -exec  stat -Lc '%
            if (!(sprintf("%x", i) in seen))
              print "/dev/tty" i
        }' | tail -n 1)
-seat_num=$(@KDE_INSTALL_FULL_BINDIR@/loginctl list-sessions | grep $uid | xargs | cut -f 4 -d " " | cut -b 5-)
-
-chvt "$(echo "$free_tty" | cut -c 9-)"
+seat_num=$(@KDE_INSTALL_FULL_BINDIR@/loginctl list-sessions | awk '$4 != "-" && $2 == '$uid'' | xargs | cut -f 4 -d " " | cut -b 5-)
 
 echo "prev_tty:     $prev_tty"
 echo "prev_tty_num: $prev_tty_num"
@@ -24,22 +22,20 @@ echo "free_tty:     $free_tty"
 echo "uid:          $uid"
 echo "seat_num:     $seat_num"
 
-# Suppress `atychiarc is not writable` error on launch
-sudo install -g atychia -o atychia -d /home/atychia/
-
-# Check for required components
 if ! getent passwd atychia > /dev/null 2>&1; then
-    kdialog --error "The \`atychia\` user does not exist, therefore Atychia cannot be launched.\nPlease open an issue at \`https://github.com/filotimo-linux/atychia\`.\n\nTo restart plasmashell, press Meta+Ctrl+Shift+B." --title "Error"
-    exit 1
+    useradd -r atychia
 fi
 if ! command -v cage &> /dev/null; then
-    kdialog --error "The \`cage\` compositor is not installed, therefore Atychia cannot be launched.\nPlease open an issue at \`https://github.com/filotimo-linux/atychia\`.\n\nTo restart plasmashell, press Meta+Ctrl+Shift+B." --title "Error"
+    sudo -u \#$uid DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$uid/bus \
+      notify-send "Could not launch Desktop Recovery" \
+      "The cage compositor is not installed. Please open an issue at https://github.com/filotimo-linux/atychia.\nTo restart plasmashell, press Meta+Ctrl+Shift+B." \
+      --urgency=critical --icon=system-help --app-name="Desktop Recovery"
     exit 1
 fi
-if [ -z "$prev_tty" ] || [ -z "$prev_tty_num" ] || [ -z "$free_tty" ] || [ -z "$uid" ] || [ -z "$seat_num" ]; then
-    kdialog --error "Values required for Atychia to start could not be generated, therefore Atychia cannot be launched.\nPlease open an issue at \`https://github.com/filotimo-linux/atychia\`.\n\nTo restart plasmashell, press Meta+Ctrl+Shift+B." --title "Error"
-    exit 1
-fi
+
+sudo install -g atychia -o atychia -d /home/atychia/
+
+chvt "$(echo "$free_tty" | cut -c 9-)"
 
 sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
     --property PAMName=login \

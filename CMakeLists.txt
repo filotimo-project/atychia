@@ -3,7 +3,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-project(atychia VERSION 0.2)
+project(atychia VERSION 0.3)
 
 include(FeatureSummary)
 
@@ -39,7 +39,7 @@ find_package(
              Svg
              DBus
              ${QT_EXTRA_COMPONENTS})
-find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS Kirigami2 CoreAddons
+find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS Kirigami CoreAddons
                                                         I18n)
 
 qt_policy(SET QTP0001 NEW)

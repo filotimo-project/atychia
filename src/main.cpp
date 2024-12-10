@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
         QQuickStyle::setStyle(u"org.kde.desktop"_s);
     }
+
     KLocalizedString::setApplicationDomain("atychia");
     QCoreApplication::setOrganizationName(u"Filotimo Project"_s);
 
