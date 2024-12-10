@@ -15,28 +15,16 @@ Kirigami.ApplicationWindow {
     pageStack.initialPage: page
     pageStack.globalToolBar.style: Kirigami.ApplicationHeaderStyle.None
 
-    FocusScope {
-        anchors.fill: parent
-
-        Keys.onPressed: {
-            if (event.key === Qt.Key_Escape) {
-                Actions.returnToPrevTTYAndQuit();
-                event.accepted = true;
-            }
-
-        }
-
-    }
-
     // Error handling - I don't know how bad of an idea this is, but if it works, it works
     Connections {
+        target: Actions
+
         function onErrorOccured(name, description) {
             errorDialog.title = name;
             errorDialog.subtitle = description;
             errorDialog.open();
         }
 
-        target: Actions
     }
 
     Kirigami.PromptDialog {
@@ -252,7 +240,7 @@ Kirigami.ApplicationWindow {
 
             Image {
                 Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
-                source: "file:///usr/share/plymouth/themes/filotimo/watermark.png"
+                source: "file:///usr/share/plymouth/themes/spinner/watermark.png"
             }
 
         }
