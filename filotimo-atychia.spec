@@ -69,6 +69,7 @@ desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproje
 
 %changelog
 * Thu Dec 12 2024 Thomas Duckworth <tduck973564@gmail.com> 0.8-1
+- maybe fix spec (tduck973564@gmail.com)
 - tito (tduck973564@gmail.com)
 
 * Thu Dec 12 2024 Thomas Duckworth <tduck973564@gmail.com> 0.7-1
