@@ -3,7 +3,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 
-project(atychia VERSION 0.5)
+project(atychia VERSION 0.10)
 
 include(FeatureSummary)
 
