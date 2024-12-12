@@ -4,7 +4,7 @@ Release:       1%{?dist}
 License:       GPL-2.0-or-later
 Summary:       A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from a broken session, rather than being forced to a TTY.
 URL:           https://github.com/filotimo-project/atychia
-Source:        https://github.com/filotimo-project/atychia/archive/refs/tags/%{name}-%{version}-1.tar.gz
+Source:        %{name}-%{version}.tar.gz
 
 BuildRequires: extra-cmake-modules
 BuildRequires: gcc-c++
