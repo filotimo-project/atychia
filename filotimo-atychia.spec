@@ -54,8 +54,8 @@ A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from 
 desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproject.atychia.desktop
 desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproject.atychia-restart-plasmashell.desktop
 
+# -f %{name}.lang - no translations yet
 %files
-#-f %{name}.lang
 %license LICENSES/*
 %{_kf6_bindir}/atychia
 %{_kf6_bindir}/atychia-launch
