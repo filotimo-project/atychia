@@ -103,7 +103,7 @@ void Actions::logout() const
         showErrorMessage(error.name(), error.message());
     }
 
-    QCoreApplication::exit(0);
+    returnToTTYNumberAndQuit(1);
 }
 
 void Actions::powerOff() const
