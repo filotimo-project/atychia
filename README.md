@@ -1,7 +1,5 @@
 # Atychia
 
-https://build.opensuse.org/package/show/home:tduck:filotimolinux/filotimo-atychia
-
 A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from a broken session, rather than being forced to a TTY.
 This automatically registers a shortcut with KDE, and is designed for use with KDE. Registers `Meta+Ctrl+Alt+Del` by default.
 A shortcut is also registered to relaunch Plasmashell - `Meta+Ctrl+Shift+B`.
