@@ -33,8 +33,6 @@ if ! command -v cage &> /dev/null; then
     exit 1
 fi
 
-sudo install -g atychia -o atychia -d /home/atychia/
-
 chvt "$(echo "$free_tty" | cut -c 9-)"
 
 sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
@@ -48,4 +46,5 @@ sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
     --property Environment="WLR_NO_HARDWARE_CURSORS=1" \
     --property Environment="QT_QPA_PLATFORMTHEME=kde" \
     --property Environment="XDG_CURRENT_DESKTOP=kde" \
+    --property Environment="KDE_HOME_READONLY=1" \
     bash -c "cage -dsm last -- @KDE_INSTALL_FULL_BINDIR@/atychia $prev_tty_num $uid $seat_num || chvt $prev_tty_num"
