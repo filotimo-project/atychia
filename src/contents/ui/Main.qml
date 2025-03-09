@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 // SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck973564@gmail.com>
 
+// TODO: Overhaul actions list, put it all into backend
+// so i18n can actually work and so logic is not here
+
 import QtQuick
 import QtQuick.Controls as Controls
 import QtQuick.Layouts
@@ -237,6 +240,7 @@ Kirigami.ApplicationWindow {
 
         ColumnLayout {
             anchors.bottom: parent.bottom
+            anchors.bottomMargin: Kirigami.Units.largeSpacing * 4
 
             Image {
                 Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
