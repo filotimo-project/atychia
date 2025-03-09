@@ -68,6 +68,10 @@ desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproje
 %{_kf6_datadir}/polkit-1/rules.d/99-filotimo-atychia.rules
 
 %changelog
+* Sun Mar 09 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.13-1
+- bump (tduck@filotimoproject.org)
+- Set KDE_HOME_READONLY, don't create home folder (tduck973564@gmail.com)
+
 * Sun Mar 09 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.12-1
 - bump version (tduck@filotimoproject.org)
 - add bottom margin to logo (tduck@filotimoproject.org)
