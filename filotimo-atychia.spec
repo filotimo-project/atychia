@@ -68,6 +68,12 @@ desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproje
 %{_kf6_datadir}/polkit-1/rules.d/99-filotimo-atychia.rules
 
 %changelog
+* Sun Mar 09 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.12-1
+- bump version (tduck@filotimoproject.org)
+- add bottom margin to logo (tduck@filotimoproject.org)
+- Make this more reliable (tduck973564@gmail.com)
+- Update README.md (tduck973564@gmail.com)
+
 * Sun Feb 02 2025 Thomas Duckworth <tduck973564@gmail.com> 0.11-1
 - return to sddm on log out (tduck973564@gmail.com)
 
