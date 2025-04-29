@@ -1,6 +1,6 @@
 #!/bin/bash
 # SPDX-License-Identifier: GPL-2.0-or-later
-# SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck@filotimoproject.org>
+# SPDX-FileCopyrightText: 2025 Thomas Duckworth <tduck@filotimoproject.org>
 
 # Must be run from within Polkit (pkexec)
 uid="$PKEXEC_UID"

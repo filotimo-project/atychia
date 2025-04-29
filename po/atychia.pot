@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/filotimo-linux/atychia\n"
-"POT-Creation-Date: 2024-07-21 15:38+1000\n"
+"POT-Creation-Date: 2025-04-29 10:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,105 +17,150 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: build/src/contents/ui/Main.qml:44 src/contents/ui/Main.qml:44
+#: build/src/contents/ui/Main.qml:45 src/Actions.h:29
+#: src/contents/ui/Main.qml:45
 #, kde-format
-msgid "About Desktop Recovery"
+msgid "Return to desktop"
 msgstr ""
 
-#: build/src/contents/ui/Main.qml:51 src/contents/ui/Main.qml:51
-#, kde-format
-msgid "Quit"
-msgstr ""
-
-#: build/src/contents/ui/Main.qml:178 src/contents/ui/Main.qml:178
-#, kde-format
-msgid "Desktop Recovery"
-msgstr ""
-
-#: build/src/contents/ui/Main.qml:182 src/contents/ui/Main.qml:182
+#: build/src/contents/ui/Main.qml:139 src/contents/ui/Main.qml:139
 #, kde-format
 msgid ""
-"Hold Alt and press underlined letters on buttons with the keyboard for "
-"keyboard navigation."
+"For keyboard navigation, hold Alt and press the underlined letter on the "
+"button."
 msgstr ""
 
-#: po/rc.cpp:1 src/main.cpp:53 rc.cpp:1
+#: po/rc.cpp:1 src/main.cpp:60 rc.cpp:1
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 
-#: po/rc.cpp:2 src/main.cpp:53 rc.cpp:2
+#: po/rc.cpp:2 src/main.cpp:60 rc.cpp:2
 #, kde-format
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 
-#: src/Actions.cpp:68 src/Actions.cpp:101 src/Actions.cpp:122
-#: src/Actions.cpp:148 src/Actions.cpp:176 src/Actions.cpp:189
+#: src/Actions.cpp:43 src/Actions.cpp:76 src/Actions.cpp:97 src/Actions.cpp:123
+#: src/Actions.cpp:150 src/Actions.cpp:163
 #, kde-format
 msgid "Asynchronous call finished with error: %1 (%2)"
 msgstr ""
 
-#: src/Actions.cpp:130 src/Actions.cpp:131
+#: src/Actions.h:28
 #, kde-format
-msgid "poweroff"
+msgid "Return"
 msgstr ""
 
-#: src/Actions.cpp:131
+#: src/Actions.h:30
 #, kde-format
-msgid "Can't power off: canDoAction(PowerOff) result is false"
+msgid "Exits desktop recovery and returns to the desktop."
 msgstr ""
 
-#: src/Actions.cpp:156 src/Actions.cpp:157 src/Actions.cpp:197
-#: src/Actions.cpp:198
+#: src/Actions.h:51
 #, kde-format
-msgid "reboot"
+msgid "Log out"
 msgstr ""
 
-#: src/Actions.cpp:157
+#: src/Actions.h:52
 #, kde-format
-msgid "Can't reboot: canDoAction(Reboot) result is false"
+msgid "Log out of current user"
 msgstr ""
 
-#: src/Actions.cpp:198
+#: src/Actions.h:53
+#, kde-format
+msgid "Immediately logs out of current user. All unsaved work will be lost."
+msgstr ""
+
+#: src/Actions.h:74
+#, kde-format
+msgid "Power off"
+msgstr ""
+
+#: src/Actions.h:75
+#, kde-format
+msgid "Power off computer"
+msgstr ""
+
+#: src/Actions.h:76
+#, kde-format
+msgid "Immediately powers off the computer. All unsaved work will be lost."
+msgstr ""
+
+#: src/Actions.h:97 src/Actions.h:120
+#, kde-format
+msgid "Restart"
+msgstr ""
+
+#: src/Actions.h:98
+#, kde-format
+msgid "Restart computer"
+msgstr ""
+
+#: src/Actions.h:99
+#, kde-format
+msgid "Immediately restarts the computer. All unsaved work will be lost."
+msgstr ""
+
+#: src/Actions.h:121
+#, kde-format
+msgid "Restart to firmware setup"
+msgstr ""
+
+#: src/Actions.h:122
 #, kde-format
 msgid ""
-"Can't reboot to firmware setup: canDoAction(RebootToFirmwareSetup) result is "
-"false"
+"Immediately restarts the computer and enters firmware setup. All unsaved "
+"work will be lost."
 msgstr ""
 
-#: src/main.cpp:40
+#: src/Actions.h:143
+#, kde-format
+msgid "Launch"
+msgstr ""
+
+#: src/Actions.h:144
+#, kde-format
+msgid "Open a terminal window"
+msgstr ""
+
+#: src/Actions.h:145
+#, kde-format
+msgid "Opens a Konsole window which logs into your account."
+msgstr ""
+
+#: src/main.cpp:47
 #, kde-format
 msgctxt "@title"
 msgid "Desktop Recovery"
 msgstr ""
 
-#: src/main.cpp:44
+#: src/main.cpp:51
 #, kde-format
 msgid ""
 "Utility akin to the Ctrl-Alt-Delete menu on Windows, allowing a user to "
 "recover from a broken session without a terminal."
 msgstr ""
 
-#: src/main.cpp:48
+#: src/main.cpp:55
 #, kde-format
-msgid "Thomas Duckworth (c) 2024"
+msgid "Thomas Duckworth (c) 2025"
 msgstr ""
 
-#: src/main.cpp:49
+#: src/main.cpp:56
 #, kde-format
 msgctxt "@info:credit"
 msgid "Thomas Duckworth"
 msgstr ""
 
-#: src/main.cpp:50
+#: src/main.cpp:57
 #, kde-format
 msgctxt "@info:credit"
 msgid "Author"
 msgstr ""
 
-#: src/main.cpp:63
+#: src/main.cpp:77
 #, kde-format
 msgctxt ""
 "TTY should not be translated, number is a literal digit, and TTY is an "
@@ -123,7 +168,7 @@ msgctxt ""
 msgid "TTY number to return to."
 msgstr ""
 
-#: src/main.cpp:65
+#: src/main.cpp:79
 #, kde-format
 msgctxt ""
 "UID should not be translated, originating as in the user that the process "
@@ -131,7 +176,7 @@ msgctxt ""
 msgid "UID of originating user."
 msgstr ""
 
-#: src/main.cpp:66
+#: src/main.cpp:80
 #, kde-format
 msgctxt "Originating as in the user that the process comes from"
 msgid "Seat number of originating user."

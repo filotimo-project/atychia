@@ -1,28 +1,29 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck@filotimoproject.org>
-
-// TODO: Overhaul actions list, put it all into backend
-// so i18n can actually work and so logic is not here
+// SPDX-FileCopyrightText: 2025 Thomas Duckworth <tduck@filotimoproject.org>
 
 import QtQuick
 import QtQuick.Controls as Controls
 import QtQuick.Layouts
-import org.filotimoproject.atychia
 import org.kde.kirigami as Kirigami
+
+import org.filotimoproject.atychia
 
 Kirigami.ApplicationWindow {
     id: root
 
     objectName: "mainWindow"
-    onClosing: Actions.returnToPrevTTYAndQuit()
     pageStack.initialPage: page
     pageStack.globalToolBar.style: Kirigami.ApplicationHeaderStyle.None
+
+    Keys.onEscapePressed: {
+        Actions.returnToDesktop.execute();
+    }
 
     // Error handling - I don't know how bad of an idea this is, but if it works, it works
     Connections {
         target: Actions
 
-        function onErrorOccured(name, description) {
+        function onErrorOccurred(name, description) {
             errorDialog.title = name;
             errorDialog.subtitle = description;
             errorDialog.open();
@@ -44,84 +45,17 @@ Kirigami.ApplicationWindow {
                 text: i18n("Return to desktop")
                 icon.name: "desktop-symbolic"
                 onTriggered: {
-                    Actions.returnToPrevTTYAndQuit();
+                    Actions.returnToDesktop.execute();
                 }
             }
         ]
-    }
-
-    ListModel {
-        id: actionsModel
-
-        ListElement {
-            ident: "return"
-            actionName: "Return"
-            name: "Return to desktop"
-            description: "Exits Desktop Recovery and returns to the desktop."
-            iconSource: "desktop-symbolic"
-        }
-
-        ListElement {
-            ident: "logout"
-            actionName: "Log out"
-            name: "Log out of current user"
-            description: "Immediately logs out of current user. All unsaved work will be lost."
-            iconSource: "system-log-out-symbolic"
-        }
-
-        ListElement {
-            ident: "poweroff"
-            actionName: "Power off"
-            name: "Power off computer"
-            description: "Immediately powers off computer. All unsaved work will be lost."
-            iconSource: "system-shutdown-symbolic"
-        }
-
-        ListElement {
-            ident: "reboot"
-            actionName: "Reboot"
-            name: "Reboot computer"
-            description: "Immediately reboots computer. All unsaved work will be lost."
-            iconSource: "system-reboot-symbolic"
-        }
-
-        ListElement {
-            ident: "rebootfirmware"
-            actionName: "Reboot"
-            name: "Reboot to Firmware Setup"
-            description: "Immediately reboots to Firmware Setup. All unsaved work will be lost."
-            iconSource: "preferences-system-symbolic"
-        }
-
-        ListElement {
-            ident: "konsole"
-            // TODO: Make this terminal-emulator-agnostic
-            actionName: "Launch"
-            name: "Open a terminal window"
-            description: "Opens a Konsole window that logs into your account."
-            iconSource: "utilities-terminal-symbolic"
-        }
-
     }
 
     Component {
         id: actionsDelegate
 
         Kirigami.AbstractCard {
-            function canDoAction() {
-                switch (actionName) {
-                case "Power off":
-                    return Actions.canDoAction(Actions.CheckableAction.PowerOff);
-                case "Reboot":
-                    return Actions.canDoAction(Actions.CheckableAction.Reboot);
-                case "Reboot to setup":
-                    return Actions.canDoAction(Actions.CheckableAction.RebootToFirmwareSetup);
-                default:
-                    return true;
-                }
-            }
-
-            visible: canDoAction()
+            visible: canExecute
 
             contentItem: Item {
                 Layout.fillWidth: true
@@ -150,7 +84,7 @@ Kirigami.ApplicationWindow {
 
                     ColumnLayout {
                         Kirigami.Heading {
-                            text: i18n(name)
+                            text: name
                             level: 2
                         }
 
@@ -161,42 +95,18 @@ Kirigami.ApplicationWindow {
                         Controls.Label {
                             Layout.fillWidth: true
                             wrapMode: Text.WordWrap
-                            text: i18n(description)
+                            text: description
                         }
 
                     }
 
                     Controls.Button {
-                        function activate() {
-                            switch (ident) {
-                            case "return":
-                                // TODO: This should be in the ListElement somehow
-                                Actions.returnToPrevTTYAndQuit();
-                                break;
-                            case "logout":
-                                Actions.logout();
-                                break;
-                            case "poweroff":
-                                Actions.powerOff();
-                                break;
-                            case "reboot":
-                                Actions.reboot();
-                                break;
-                            case "rebootfirmware":
-                                Actions.rebootToFirmwareSetup();
-                                break;
-                            case "konsole":
-                                Actions.launchKonsole();
-                                break;
-                            }
-                        }
-
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         Layout.columnSpan: 2
-                        text: actionName
-                        onClicked: activate()
-                        Keys.onEnterPressed: activate()
-                        Keys.onReturnPressed: activate()
+                        text: buttonText
+                        onClicked: actionObject.execute()
+                        Keys.onEnterPressed: actionObject.execute()
+                        Keys.onReturnPressed: actionObject.execute()
                     }
 
                 }
@@ -230,7 +140,7 @@ Kirigami.ApplicationWindow {
                 }
 
                 Repeater {
-                    model: actionsModel
+                    model: Actions
                     delegate: actionsDelegate
                 }
 

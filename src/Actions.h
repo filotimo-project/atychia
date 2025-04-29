@@ -1,44 +1,377 @@
 /*
  *  SPDX-License-Identifier: GPL-2.0-or-later
- *  SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck@filotimoproject.org>
+ *  SPDX-FileCopyrightText: 2025 Thomas Duckworth <tduck@filotimoproject.org>
  */
 
 #pragma once
 
+#include <KLocalizedString>
+#include <QAbstractListModel>
 #include <QDBusInterface>
 #include <QErrorMessage>
 #include <QObject>
 
-using namespace Qt::Literals::StringLiterals;
+#include "Action.h"
 
-class Actions : public QObject
+class Return : public Action
 {
     Q_OBJECT
-
-    void returnToTTYNumberAndQuit(uint32_t ttyNum) const;
-    void showErrorMessage(QString name, QString message) const;
+    Q_PROPERTY(QString buttonText READ buttonText CONSTANT)
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString description READ description CONSTANT)
+    Q_PROPERTY(QString iconSource READ iconSource CONSTANT)
+    Q_PROPERTY(bool canExecute READ canExecute CONSTANT)
 
 public:
-    explicit Actions(QObject *parent = nullptr, uint32_t tty_number = 0, uint32_t user_uid = 0, uint32_t seat_number = 0);
+    explicit Return(QObject *parent = nullptr, ActionContext *ctx = nullptr)
+        : Action(parent, ctx)
+    {
+    }
 
-    enum class CheckableAction : int { RebootToFirmwareSetup, Reboot, PowerOff };
-    Q_ENUM(CheckableAction)
+    QString buttonText() const override
+    {
+        return i18n("Return");
+    }
+    QString name() const override
+    {
+        return i18n("Return to desktop");
+    }
+    QString description() const override
+    {
+        return i18n("Exits desktop recovery and returns to the desktop.");
+    }
+    QString iconSource() const override
+    {
+        return u"desktop-symbolic"_s;
+    }
 
-    uint32_t ttyNumber;
-    uint32_t userUid;
-    uint32_t seatNumber;
+    bool canExecute() const override
+    {
+        return true;
+    }
+    Q_INVOKABLE void execute() override;
 
-    Q_SLOT bool canDoAction(Actions::CheckableAction action) const;
+    Q_SIGNAL void errorOccurred(QString name, QString description) const;
+};
 
-    Q_SLOT void returnToPrevTTYAndQuit() const;
+class Logout : public Action
+{
+    Q_OBJECT
+    Q_PROPERTY(QString buttonText READ buttonText CONSTANT)
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString description READ description CONSTANT)
+    Q_PROPERTY(QString iconSource READ iconSource CONSTANT)
+    Q_PROPERTY(bool canExecute READ canExecute CONSTANT)
 
-    Q_SLOT void logout() const;
+public:
+    explicit Logout(QObject *parent = nullptr, ActionContext *ctx = nullptr)
+        : Action(parent, ctx)
+    {
+    }
 
-    Q_SLOT void powerOff() const;
-    Q_SLOT void reboot() const;
-    Q_SLOT void rebootToFirmwareSetup() const;
+    QString buttonText() const override
+    {
+        return i18n("Log out");
+    }
+    QString name() const override
+    {
+        return i18n("Log out of current user");
+    }
+    QString description() const override
+    {
+        return i18n("Immediately logs out of current user. All unsaved work will be lost.");
+    }
+    QString iconSource() const override
+    {
+        return u"system-log-out-symbolic"_s;
+    }
 
-    Q_SLOT void launchKonsole() const;
+    bool canExecute() const override
+    {
+        return true;
+    }
+    Q_INVOKABLE void execute() override;
 
-    Q_SIGNAL void errorOccured(QString name, QString description) const;
+    Q_SIGNAL void errorOccurred(QString name, QString description) const;
+};
+
+class PowerOff : public Action
+{
+    Q_OBJECT
+    Q_PROPERTY(QString buttonText READ buttonText CONSTANT)
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString description READ description CONSTANT)
+    Q_PROPERTY(QString iconSource READ iconSource CONSTANT)
+    Q_PROPERTY(bool canExecute READ canExecute CONSTANT)
+
+public:
+    explicit PowerOff(QObject *parent = nullptr, ActionContext *ctx = nullptr)
+        : Action(parent, ctx)
+    {
+    }
+
+    QString buttonText() const override
+    {
+        return i18n("Power off");
+    }
+    QString name() const override
+    {
+        return i18n("Power off computer");
+    }
+    QString description() const override
+    {
+        return i18n("Immediately powers off the computer. All unsaved work will be lost.");
+    }
+    QString iconSource() const override
+    {
+        return u"system-shutdown-symbolic"_s;
+    }
+
+    bool canExecute() const override;
+    Q_INVOKABLE void execute() override;
+
+    Q_SIGNAL void errorOccurred(QString name, QString description) const;
+};
+
+class Restart : public Action
+{
+    Q_OBJECT
+    Q_PROPERTY(QString buttonText READ buttonText CONSTANT)
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString description READ description CONSTANT)
+    Q_PROPERTY(QString iconSource READ iconSource CONSTANT)
+    Q_PROPERTY(bool canExecute READ canExecute CONSTANT)
+
+public:
+    explicit Restart(QObject *parent = nullptr, ActionContext *ctx = nullptr)
+        : Action(parent, ctx)
+    {
+    }
+
+    QString buttonText() const override
+    {
+        return i18n("Restart");
+    }
+    QString name() const override
+    {
+        return i18n("Restart computer");
+    }
+    QString description() const override
+    {
+        return i18n("Immediately restarts the computer. All unsaved work will be lost.");
+    }
+    QString iconSource() const override
+    {
+        return u"system-reboot-symbolic"_s;
+    }
+
+    bool canExecute() const override;
+    Q_INVOKABLE void execute() override;
+
+    Q_SIGNAL void errorOccurred(QString name, QString description) const;
+};
+
+class RestartToFirmwareSetup : public Action
+{
+    Q_OBJECT
+    Q_PROPERTY(QString buttonText READ buttonText CONSTANT)
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString description READ description CONSTANT)
+    Q_PROPERTY(QString iconSource READ iconSource CONSTANT)
+    Q_PROPERTY(bool canExecute READ canExecute CONSTANT)
+
+public:
+    explicit RestartToFirmwareSetup(QObject *parent = nullptr, ActionContext *ctx = nullptr)
+        : Action(parent, ctx)
+    {
+    }
+
+    QString buttonText() const override
+    {
+        return i18n("Restart");
+    }
+    QString name() const override
+    {
+        return i18n("Restart to firmware setup");
+    }
+    QString description() const override
+    {
+        return i18n("Immediately restarts the computer and enters firmware setup. All unsaved work will be lost.");
+    }
+    QString iconSource() const override
+    {
+        return u"preferences-system-symbolic"_s;
+    }
+
+    bool canExecute() const override;
+    Q_INVOKABLE void execute() override;
+
+    Q_SIGNAL void errorOccurred(QString name, QString description) const;
+};
+
+class LaunchKonsole : public Action
+{
+    Q_OBJECT
+    Q_PROPERTY(QString buttonText READ buttonText CONSTANT)
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString description READ description CONSTANT)
+    Q_PROPERTY(QString iconSource READ iconSource CONSTANT)
+    Q_PROPERTY(bool canExecute READ canExecute CONSTANT)
+
+public:
+    explicit LaunchKonsole(QObject *parent = nullptr, ActionContext *ctx = nullptr)
+        : Action(parent, ctx)
+    {
+    }
+
+    QString buttonText() const override
+    {
+        return i18n("Launch");
+    }
+    QString name() const override
+    {
+        return i18n("Open a terminal window");
+    }
+    QString description() const override
+    {
+        return i18n("Opens a Konsole window which logs into your account.");
+    }
+    QString iconSource() const override
+    {
+        return u"utilities-terminal-symbolic"_s;
+    }
+
+    bool canExecute() const override
+    {
+        return true;
+    }
+    Q_INVOKABLE void execute() override;
+
+    Q_SIGNAL void errorOccurred(QString name, QString description) const;
+};
+
+// The model for all the actions as well as direct access to specific actions
+class ActionModel : public QAbstractListModel
+{
+    Q_OBJECT
+    Q_PROPERTY(Return *returnAction READ returnToDesktop CONSTANT)
+    Q_PROPERTY(Logout *logoutAction READ logout CONSTANT)
+    Q_PROPERTY(PowerOff *powerOffAction READ powerOff CONSTANT)
+    Q_PROPERTY(Restart *restartAction READ restart CONSTANT)
+    Q_PROPERTY(RestartToFirmwareSetup *restartToFirmwareSetupAction READ restartToFirmwareSetup CONSTANT)
+    Q_PROPERTY(LaunchKonsole *launchKonsoleAction READ launchKonsole CONSTANT)
+
+public:
+    enum ActionRoles {
+        ButtonTextRole = Qt::UserRole + 1,
+        NameRole,
+        DescriptionRole,
+        IconSourceRole,
+        CanExecuteRole,
+        ActionObjectRole
+    };
+
+    explicit ActionModel(QObject *parent = nullptr, ActionContext *ctx = nullptr)
+        : QAbstractListModel(parent)
+        , m_returnAction(new Return(this, ctx))
+        , m_logoutAction(new Logout(this, ctx))
+        , m_powerOffAction(new PowerOff(this, ctx))
+        , m_restartAction(new Restart(this, ctx))
+        , m_restartToFirmwareSetupAction(new RestartToFirmwareSetup(this, ctx))
+        , m_launchKonsoleAction(new LaunchKonsole(this, ctx))
+    {
+        // Initialise the list with the members
+        // Any new Action needs to have a member in this class, and be added to this list
+        m_actions = {m_returnAction, m_logoutAction, m_powerOffAction, m_restartAction, m_restartToFirmwareSetupAction, m_launchKonsoleAction};
+
+        // Connect the errorOccurred signal from each action to the model
+        for (Action *action : m_actions) {
+            connect(action, &Action::errorOccurred, this, [this](QString name, QString description) {
+                Q_EMIT errorOccurred(name, description);
+            });
+        }
+    }
+
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override
+    {
+        if (parent.isValid())
+            return 0;
+        return m_actions.size();
+    }
+
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override
+    {
+        if (!index.isValid() || index.row() < 0 || index.row() >= m_actions.size())
+            return QVariant();
+
+        const Action *action = m_actions.at(index.row());
+        switch (role) {
+        case ButtonTextRole:
+            return action->buttonText();
+        case NameRole:
+            return action->name();
+        case DescriptionRole:
+            return action->description();
+        case IconSourceRole:
+            return action->iconSource();
+        case CanExecuteRole:
+            return action->canExecute();
+        // return the action object itself
+        // so that we can call execute() on it in qml
+        // I do not like this
+        case ActionObjectRole:
+            return QVariant::fromValue(action);
+        default:
+            return QVariant();
+        }
+    }
+
+    QHash<int, QByteArray> roleNames() const override
+    {
+        QHash<int, QByteArray> roles;
+        roles[ButtonTextRole] = "buttonText";
+        roles[NameRole] = "name";
+        roles[DescriptionRole] = "description";
+        roles[IconSourceRole] = "iconSource";
+        roles[CanExecuteRole] = "canExecute";
+        roles[ActionObjectRole] = "actionObject";
+        return roles;
+    }
+
+    Return *returnToDesktop() const
+    {
+        return m_returnAction;
+    }
+    Logout *logout() const
+    {
+        return m_logoutAction;
+    }
+    PowerOff *powerOff() const
+    {
+        return m_powerOffAction;
+    }
+    Restart *restart() const
+    {
+        return m_restartAction;
+    }
+    RestartToFirmwareSetup *restartToFirmwareSetup() const
+    {
+        return m_restartToFirmwareSetupAction;
+    }
+    LaunchKonsole *launchKonsole() const
+    {
+        return m_launchKonsoleAction;
+    }
+
+    Q_SIGNAL void errorOccurred(QString name, QString description) const;
+
+private:
+    QList<Action *> m_actions;
+
+    Return *m_returnAction;
+    Logout *m_logoutAction;
+    PowerOff *m_powerOffAction;
+    Restart *m_restartAction;
+    RestartToFirmwareSetup *m_restartToFirmwareSetupAction;
+    LaunchKonsole *m_launchKonsoleAction;
 };

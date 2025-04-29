@@ -1,6 +1,6 @@
 /*
  *  SPDX-License-Identifier: GPL-2.0-or-later
- *  SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck@filotimoproject.org>
+ *  SPDX-FileCopyrightText: 2025 Thomas Duckworth <tduck@filotimoproject.org>
  */
 
 #include "Actions.h"
@@ -19,15 +19,7 @@
 
 using namespace Qt::Literals::StringLiterals;
 
-Actions::Actions(QObject *parent, uint32_t tty_number, uint32_t user_uid, uint32_t seat_number)
-    : QObject(parent)
-{
-    ttyNumber = tty_number;
-    userUid = user_uid;
-    seatNumber = seat_number;
-}
-
-void Actions::returnToTTYNumberAndQuit(uint32_t ttyNum) const
+static void returnToTTYNumberAndQuit(uint32_t ttyNum, uint32_t seatNumber)
 {
     QDBusInterface seatd{u"org.freedesktop.login1"_s,
                          u"/org/freedesktop/login1/seat/seat%1"_s.arg(seatNumber),
@@ -39,26 +31,8 @@ void Actions::returnToTTYNumberAndQuit(uint32_t ttyNum) const
     QCoreApplication::exit(0);
 }
 
-void Actions::showErrorMessage(QString name, QString message) const
+static bool canDoAction(QString actionText)
 {
-    Q_EMIT errorOccured(name, message);
-}
-
-bool Actions::canDoAction(CheckableAction action) const
-{
-    QString actionText;
-    switch (action) {
-    case CheckableAction::RebootToFirmwareSetup:
-        actionText = u"CanRebootToFirmwareSetup"_s;
-        break;
-    case CheckableAction::Reboot:
-        actionText = u"CanReboot"_s;
-        break;
-    case CheckableAction::PowerOff:
-        actionText = u"CanPowerOff"_s;
-        break;
-    }
-
     QDBusInterface logind{u"org.freedesktop.login1"_s, u"/org/freedesktop/login1"_s, u"org.freedesktop.login1.Manager"_s, QDBusConnection::systemBus()};
     const auto message = logind.callWithArgumentList(QDBus::Block, actionText, {});
     QDBusPendingReply<QString> canDoAction = message;
@@ -67,30 +41,30 @@ bool Actions::canDoAction(CheckableAction action) const
     if (canDoAction.isError()) {
         const auto error = canDoAction.error();
         qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
-        showErrorMessage(error.name(), error.message());
         return false;
     }
 
     if (canDoAction.value() == u"yes"_s) {
         return true;
-    } else {
-        return false;
     }
+
     return false;
 }
 
-void Actions::returnToPrevTTYAndQuit() const
+// Return to desktop
+void Return::execute()
 {
-    returnToTTYNumberAndQuit(ttyNumber);
+    returnToTTYNumberAndQuit(m_ctx->ttyNumber(), m_ctx->seatNumber());
 }
 
-void Actions::logout() const
+// Logout
+void Logout::execute()
 {
     QDBusInterface logind{u"org.freedesktop.login1"_s, u"/org/freedesktop/login1"_s, u"org.freedesktop.login1.Manager"_s, QDBusConnection::systemBus()};
     const auto message = logind.callWithArgumentList(QDBus::Block,
                                                      u"KillUser"_s,
                                                      {
-                                                         userUid,
+                                                         m_ctx->userUid(),
                                                          SIGTERM,
                                                      });
 
@@ -100,109 +74,111 @@ void Actions::logout() const
     if (killedUser.isError()) {
         const auto error = killedUser.error();
         qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
-        showErrorMessage(error.name(), error.message());
+        Q_EMIT errorOccurred(error.name(), error.message());
     }
 
-    returnToTTYNumberAndQuit(1);
+    returnToTTYNumberAndQuit(1, m_ctx->seatNumber());
 }
 
-void Actions::powerOff() const
+// Power off
+void PowerOff::execute()
 {
     QDBusInterface logind{u"org.freedesktop.login1"_s, u"/org/freedesktop/login1"_s, u"org.freedesktop.login1.Manager"_s, QDBusConnection::systemBus()};
 
-    if (canDoAction(CheckableAction::PowerOff)) {
-        QDBusPendingReply<> powerOff = logind.callWithArgumentList(QDBus::Block,
-                                                                   u"PowerOff"_s,
-                                                                   {
-                                                                       true,
-                                                                   });
+    QDBusPendingReply<> powerOff = logind.callWithArgumentList(QDBus::Block,
+                                                               u"PowerOff"_s,
+                                                               {
+                                                                   true,
+                                                               });
 
-        Q_ASSERT(powerOff.isFinished());
-        if (powerOff.isError()) {
-            const auto error = powerOff.error();
-            qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
-            showErrorMessage(error.name(), error.message());
-            return;
-        }
-
-        QCoreApplication::exit(0);
-
-    } else {
-        qCritical().noquote() << i18n("poweroff", u"Can't power off: canDoAction(PowerOff) result is false"_s);
-        showErrorMessage(i18n("poweroff"), i18n("Can't power off: canDoAction(PowerOff) result is false"));
+    Q_ASSERT(powerOff.isFinished());
+    if (powerOff.isError()) {
+        const auto error = powerOff.error();
+        qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+        Q_EMIT errorOccurred(error.name(), error.message());
+        return;
     }
+
+    QCoreApplication::exit(0);
 }
 
-void Actions::reboot() const
+bool PowerOff::canExecute() const
+{
+    return canDoAction(u"CanPowerOff"_s);
+}
+
+// Restart
+void Restart::execute()
 {
     QDBusInterface logind{u"org.freedesktop.login1"_s, u"/org/freedesktop/login1"_s, u"org.freedesktop.login1.Manager"_s, QDBusConnection::systemBus()};
 
-    if (canDoAction(CheckableAction::Reboot)) {
-        QDBusPendingReply<> reboot = logind.callWithArgumentList(QDBus::Block,
-                                                                 u"Reboot"_s,
-                                                                 {
-                                                                     true,
-                                                                 });
-        Q_ASSERT(reboot.isFinished());
-        if (reboot.isError()) {
-            const auto error = reboot.error();
-            qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
-            showErrorMessage(error.name(), error.message());
-            return;
-        }
+    QDBusPendingReply<> restart = logind.callWithArgumentList(QDBus::Block,
+                                                              u"Reboot"_s,
+                                                              {
+                                                                  true,
+                                                              });
 
-        QCoreApplication::exit(0);
-
-    } else {
-        qCritical().noquote() << i18n("reboot", u"Can't reboot: canDoAction(Reboot) result is false"_s);
-        showErrorMessage(i18n("reboot"), i18n("Can't reboot: canDoAction(Reboot) result is false"));
+    Q_ASSERT(restart.isFinished());
+    if (restart.isError()) {
+        const auto error = restart.error();
+        qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+        Q_EMIT errorOccurred(error.name(), error.message());
+        return;
     }
+
+    QCoreApplication::exit(0);
 }
 
-void Actions::rebootToFirmwareSetup() const
+bool Restart::canExecute() const
+{
+    return canDoAction(u"CanReboot"_s);
+}
+
+// Restart to firmware setup
+void RestartToFirmwareSetup::execute()
 {
     QDBusInterface logind{u"org.freedesktop.login1"_s, u"/org/freedesktop/login1"_s, u"org.freedesktop.login1.Manager"_s, QDBusConnection::systemBus()};
 
-    if (canDoAction(CheckableAction::RebootToFirmwareSetup)) {
-        const auto message = logind.callWithArgumentList(QDBus::Block,
-                                                         u"SetRebootToFirmwareSetup"_s,
-                                                         {
-                                                             true,
-                                                         });
-        QDBusPendingReply<QString> setRebootToFirmwareSetup = message;
+    const auto message = logind.callWithArgumentList(QDBus::Block,
+                                                     u"SetRebootToFirmwareSetup"_s,
+                                                     {
+                                                         true,
+                                                     });
+    QDBusPendingReply<QString> setRebootToFirmwareSetup = message;
 
-        Q_ASSERT(setRebootToFirmwareSetup.isFinished());
-        if (setRebootToFirmwareSetup.isError()) {
-            const auto error = setRebootToFirmwareSetup.error();
-            qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
-            showErrorMessage(error.name(), error.message());
-            return;
-        }
-
-        QDBusPendingReply<> reboot = logind.callWithArgumentList(QDBus::Block,
-                                                                 u"Reboot"_s,
-                                                                 {
-                                                                     true,
-                                                                 });
-        Q_ASSERT(reboot.isFinished());
-        if (reboot.isError()) {
-            const auto error = reboot.error();
-            qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
-            showErrorMessage(error.name(), error.message());
-            return;
-        }
-
-        QCoreApplication::exit(0);
-
-    } else {
-        qCritical().noquote() << i18n("reboot", u"Can't reboot to firmware setup: canDoAction(RebootToFirmwareSetup) result is false"_s);
-        showErrorMessage(i18n("reboot"), i18n("Can't reboot to firmware setup: canDoAction(RebootToFirmwareSetup) result is false"));
+    Q_ASSERT(setRebootToFirmwareSetup.isFinished());
+    if (setRebootToFirmwareSetup.isError()) {
+        const auto error = setRebootToFirmwareSetup.error();
+        qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+        Q_EMIT errorOccurred(error.name(), error.message());
+        return;
     }
+
+    QDBusPendingReply<> reboot = logind.callWithArgumentList(QDBus::Block,
+                                                             u"Reboot"_s,
+                                                             {
+                                                                 true,
+                                                             });
+    Q_ASSERT(reboot.isFinished());
+    if (reboot.isError()) {
+        const auto error = reboot.error();
+        qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
+        Q_EMIT errorOccurred(error.name(), error.message());
+        return;
+    }
+
+    QCoreApplication::exit(0);
 }
 
-void Actions::launchKonsole() const
+bool RestartToFirmwareSetup::canExecute() const
 {
-    struct passwd *pwd = getpwuid(userUid);
+    return canDoAction(u"CanRebootToFirmwareSetup"_s);
+}
+
+// Launch a terminal
+void LaunchKonsole::execute()
+{
+    struct passwd *pwd = getpwuid(m_ctx->userUid());
     QStringList args{
         u"-e"_s,
         u"/%1/su"_s.arg(QString::fromUtf8(BINDIR)),

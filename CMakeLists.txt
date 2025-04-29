@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck@filotimoproject.org>
+# SPDX-FileCopyrightText: 2025 Thomas Duckworth <tduck@filotimoproject.org>
 # SPDX-License-Identifier: BSD-3-Clause
 
 cmake_minimum_required(VERSION 3.16)

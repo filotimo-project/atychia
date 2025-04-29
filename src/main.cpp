@@ -1,6 +1,6 @@
 /*
     SPDX-License-Identifier: GPL-2.0-or-later
-    SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck@filotimoproject.org>
+    SPDX-FileCopyrightText: 2025 Thomas Duckworth <tduck@filotimoproject.org>
 */
 
 #include <QApplication>
@@ -13,6 +13,7 @@
 #include <QQuickStyle>
 #include <QUrl>
 
+#include "Action.h"
 #include "Actions.h"
 #include "version-atychia.h"
 #include <KAboutData>
@@ -28,16 +29,13 @@ using namespace Qt::Literals::StringLiterals;
 
 int main(int argc, char *argv[])
 {
+    // Set up the application
     QApplication app(argc, argv);
 
     // Default to org.kde.desktop style unless the user forces another style
     if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
         QQuickStyle::setStyle(u"org.kde.desktop"_s);
     }
-
-    KColorSchemeManager *manager = KColorSchemeManager::instance();
-    QModelIndex index = manager->indexForScheme(u"Filotimo Dark"_s);
-    manager->activateScheme(index);
 
     KLocalizedString::setApplicationDomain("atychia");
     QCoreApplication::setOrganizationName(u"Filotimo Project"_s);
@@ -54,7 +52,7 @@ int main(int argc, char *argv[])
         // The license this code is released under.
         KAboutLicense::GPL,
         // Copyright Statement.
-        i18n("Thomas Duckworth (c) 2024"));
+        i18n("Thomas Duckworth (c) 2025"));
     aboutData.addAuthor(i18nc("@info:credit", "Thomas Duckworth"),
                         i18nc("@info:credit", "Author"),
                         u"tduck@filotimoproject.org"_s,
@@ -63,6 +61,13 @@ int main(int argc, char *argv[])
     KAboutData::setApplicationData(aboutData);
     QGuiApplication::setWindowIcon(QIcon::fromTheme(u"system-help"_s));
 
+    // Set the default color scheme to Filotimo Dark
+    KColorSchemeManager *manager = KColorSchemeManager::instance();
+    QModelIndex index = manager->indexForScheme(u"Filotimo Dark"_s);
+    manager->activateScheme(index);
+
+    // Parse command line arguments
+    // These are passed from the libexec script
     QCommandLineParser parser;
     parser.setApplicationDescription(aboutData.shortDescription());
     parser.addHelpOption();
@@ -80,11 +85,17 @@ int main(int argc, char *argv[])
     const uint32_t userUid = std::stoi(parser.positionalArguments()[1].toStdString());
     const uint32_t seatNumber = std::stoi(parser.positionalArguments()[2].toStdString());
 
-    Actions actions = Actions(&app, ttyNumber, userUid, seatNumber);
+    // Set up the actions and their context
+    ActionContext ctx{nullptr, ttyNumber, userUid, seatNumber};
+    ActionModel actionModel{nullptr, &ctx};
 
+    // Set up the QML engine
     QQmlApplicationEngine engine;
 
-    qmlRegisterSingletonInstance<Actions>("org.filotimoproject.atychia", 1, 0, "Actions", &actions);
+    qmlRegisterUncreatableType<ActionModel>("org.filotimoproject.atychia", 1, 0, "ActionModel", u"ActionModel is not creatable in QML"_s);
+    qmlRegisterUncreatableType<Action>("org.filotimoproject.atychia", 1, 0, "Action", u"Action is not creatable in QML"_s);
+
+    qmlRegisterSingletonInstance<ActionModel>("org.filotimoproject.atychia", 1, 0, "Actions", &actionModel);
 
     engine.rootContext()->setContextObject(new KLocalizedContext(&engine));
     engine.loadFromModule("org.filotimoproject.atychia", u"Main");

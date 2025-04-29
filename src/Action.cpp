@@ -3,9 +3,4 @@
  *  SPDX-FileCopyrightText: 2025 Thomas Duckworth <tduck@filotimoproject.org>
  */
 
-#ifndef DIRECTORIES_H_IN
-#define DIRECTORIES_H_IN
-
-#define BINDIR "@KDE_INSTALL_BINDIR@"
-
-#endif
+#include "Action.h"
