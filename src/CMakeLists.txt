@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: BSD-2-Clause
-# SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck973564@gmail.com>
+# SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck@filotimoproject.org>
 
 # Target: static library
 qt_add_qml_module(atychia_static

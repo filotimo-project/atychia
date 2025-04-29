@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
-// SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck973564@gmail.com>
+// SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck@filotimoproject.org>
 
 // TODO: Overhaul actions list, put it all into backend
 // so i18n can actually work and so logic is not here

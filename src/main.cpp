@@ -1,6 +1,6 @@
 /*
     SPDX-License-Identifier: GPL-2.0-or-later
-    SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck973564@gmail.com>
+    SPDX-FileCopyrightText: 2024 Thomas Duckworth <tduck@filotimoproject.org>
 */
 
 #include <QApplication>
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
         i18n("Thomas Duckworth (c) 2024"));
     aboutData.addAuthor(i18nc("@info:credit", "Thomas Duckworth"),
                         i18nc("@info:credit", "Author"),
-                        u"tduck973564@gmail.com"_s,
+                        u"tduck@filotimoproject.org"_s,
                         u"https://github.com/filotimo-project"_s);
     aboutData.setTranslator(i18nc("NAME OF TRANSLATORS", "Your names"), i18nc("EMAIL OF TRANSLATORS", "Your emails"));
     KAboutData::setApplicationData(aboutData);

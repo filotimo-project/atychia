@@ -70,32 +70,32 @@ desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproje
 %changelog
 * Sun Mar 09 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.13-1
 - bump (tduck@filotimoproject.org)
-- Set KDE_HOME_READONLY, don't create home folder (tduck973564@gmail.com)
+- Set KDE_HOME_READONLY, don't create home folder (tduck@filotimoproject.org)
 
 * Sun Mar 09 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.12-1
 - bump version (tduck@filotimoproject.org)
 - add bottom margin to logo (tduck@filotimoproject.org)
-- Make this more reliable (tduck973564@gmail.com)
-- Update README.md (tduck973564@gmail.com)
+- Make this more reliable (tduck@filotimoproject.org)
+- Update README.md (tduck@filotimoproject.org)
 
-* Sun Feb 02 2025 Thomas Duckworth <tduck973564@gmail.com> 0.11-1
-- return to sddm on log out (tduck973564@gmail.com)
+* Sun Feb 02 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.11-1
+- return to sddm on log out (tduck@filotimoproject.org)
 
-* Thu Dec 12 2024 Thomas Duckworth <tduck973564@gmail.com> 0.10-1
-- fix spec (tduck973564@gmail.com)
-- bump version (tduck973564@gmail.com)
+* Thu Dec 12 2024 Thomas Duckworth <tduck@filotimoproject.org> 0.10-1
+- fix spec (tduck@filotimoproject.org)
+- bump version (tduck@filotimoproject.org)
 
-* Thu Dec 12 2024 Thomas Duckworth <tduck973564@gmail.com> 0.9-1
+* Thu Dec 12 2024 Thomas Duckworth <tduck@filotimoproject.org> 0.9-1
 - Automatic commit of package [filotimo-atychia] release [0.8-1].
-  (tduck973564@gmail.com)
-- maybe fix spec (tduck973564@gmail.com)
+  (tduck@filotimoproject.org)
+- maybe fix spec (tduck@filotimoproject.org)
 - Automatic commit of package [filotimo-atychia] release [0.8-1].
-  (tduck973564@gmail.com)
+  (tduck@filotimoproject.org)
 
-* Thu Dec 12 2024 Thomas Duckworth <tduck973564@gmail.com> 0.8-1
-- maybe fix spec (tduck973564@gmail.com)
-- tito (tduck973564@gmail.com)
+* Thu Dec 12 2024 Thomas Duckworth <tduck@filotimoproject.org> 0.8-1
+- maybe fix spec (tduck@filotimoproject.org)
+- tito (tduck@filotimoproject.org)
 
-* Thu Dec 12 2024 Thomas Duckworth <tduck973564@gmail.com> 0.7-1
+* Thu Dec 12 2024 Thomas Duckworth <tduck@filotimoproject.org> 0.7-1
 - new package built with tito
 
