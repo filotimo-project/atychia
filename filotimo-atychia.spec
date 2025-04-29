@@ -68,6 +68,15 @@ desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproje
 %{_kf6_datadir}/polkit-1/rules.d/99-filotimo-atychia.rules
 
 %changelog
+* Tue Apr 29 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.14-1
+- chore: bump (tduck@filotimoproject.org)
+- refactor: Make Action representation robust (tduck@filotimoproject.org)
+- chore: Update my email (tduck@filotimoproject.org)
+- Automatic commit of package [filotimo-atychia] release [0.13-1].
+  (tduck@filotimoproject.org)
+- bump (tduck@filotimoproject.org)
+- Update atychia-launch.in (tduck973564@gmail.com)
+
 * Sun Mar 09 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.13-1
 - bump (tduck@filotimoproject.org)
 - Set KDE_HOME_READONLY, don't create home folder (tduck@filotimoproject.org)
