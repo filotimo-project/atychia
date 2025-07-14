@@ -68,6 +68,9 @@ desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproje
 %{_kf6_datadir}/polkit-1/rules.d/99-filotimo-atychia.rules
 
 %changelog
+* Mon Jul 14 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.15-1
+- feat: better i18n including desktop files (tduck@filotimoproject.org)
+
 * Tue Apr 29 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.14-1
 - chore: bump (tduck@filotimoproject.org)
 - refactor: Make Action representation robust (tduck@filotimoproject.org)
