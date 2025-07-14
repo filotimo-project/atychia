@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Atychia translations.
+# Copyright (C) 2025 Atychia contributors
+# This file is distributed under the same license as the Atychia package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: https://github.com/filotimo-linux/atychia\n"
-"POT-Creation-Date: 2025-04-29 10:21+0000\n"
+"Project-Id-Version: Atychia 0.10\n"
+"Report-Msgid-Bugs-To: https://github.com/filotimo-project/atychia \n"
+"POT-Creation-Date: 2025-07-14 13:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,117 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: build/src/contents/ui/Main.qml:45 src/Actions.h:29
-#: src/contents/ui/Main.qml:45
-#, kde-format
-msgid "Return to desktop"
+#: org.filotimoproject.atychia-restart-plasmashell.desktop:5
+msgid "A shortcut to restart the KDE Plasma Shell"
 msgstr ""
 
-#: build/src/contents/ui/Main.qml:139 src/contents/ui/Main.qml:139
-#, kde-format
-msgid ""
-"For keyboard navigation, hold Alt and press the underlined letter on the "
-"button."
-msgstr ""
-
-#: po/rc.cpp:1 src/main.cpp:60 rc.cpp:1
-#, kde-format
-msgctxt "NAME OF TRANSLATORS"
-msgid "Your names"
-msgstr ""
-
-#: po/rc.cpp:2 src/main.cpp:60 rc.cpp:2
-#, kde-format
-msgctxt "EMAIL OF TRANSLATORS"
-msgid "Your emails"
-msgstr ""
-
-#: src/Actions.cpp:43 src/Actions.cpp:76 src/Actions.cpp:97 src/Actions.cpp:123
-#: src/Actions.cpp:150 src/Actions.cpp:163
+#: src/Actions.cpp:43 src/Actions.cpp:76 src/Actions.cpp:97 src/Actions.cpp:124
+#: src/Actions.cpp:152 src/Actions.cpp:165
 #, kde-format
 msgid "Asynchronous call finished with error: %1 (%2)"
 msgstr ""
 
-#: src/Actions.h:28
+#: src/main.cpp:57
 #, kde-format
-msgid "Return"
+msgctxt "@info:credit"
+msgid "Author"
 msgstr ""
 
-#: src/Actions.h:30
-#, kde-format
-msgid "Exits desktop recovery and returns to the desktop."
-msgstr ""
-
-#: src/Actions.h:51
-#, kde-format
-msgid "Log out"
-msgstr ""
-
-#: src/Actions.h:52
-#, kde-format
-msgid "Log out of current user"
-msgstr ""
-
-#: src/Actions.h:53
-#, kde-format
-msgid "Immediately logs out of current user. All unsaved work will be lost."
-msgstr ""
-
-#: src/Actions.h:74
-#, kde-format
-msgid "Power off"
-msgstr ""
-
-#: src/Actions.h:75
-#, kde-format
-msgid "Power off computer"
-msgstr ""
-
-#: src/Actions.h:76
-#, kde-format
-msgid "Immediately powers off the computer. All unsaved work will be lost."
-msgstr ""
-
-#: src/Actions.h:97 src/Actions.h:120
-#, kde-format
-msgid "Restart"
-msgstr ""
-
-#: src/Actions.h:98
-#, kde-format
-msgid "Restart computer"
-msgstr ""
-
-#: src/Actions.h:99
-#, kde-format
-msgid "Immediately restarts the computer. All unsaved work will be lost."
-msgstr ""
-
-#: src/Actions.h:121
-#, kde-format
-msgid "Restart to firmware setup"
-msgstr ""
-
-#: src/Actions.h:122
-#, kde-format
-msgid ""
-"Immediately restarts the computer and enters firmware setup. All unsaved "
-"work will be lost."
-msgstr ""
-
-#: src/Actions.h:143
-#, kde-format
-msgid "Launch"
-msgstr ""
-
-#: src/Actions.h:144
-#, kde-format
-msgid "Open a terminal window"
-msgstr ""
-
-#: src/Actions.h:145
-#, kde-format
-msgid "Opens a Konsole window which logs into your account."
+#: org.filotimoproject.atychia.desktop:4
+msgid "Desktop Recovery"
 msgstr ""
 
 #: src/main.cpp:47
@@ -136,28 +43,112 @@ msgctxt "@title"
 msgid "Desktop Recovery"
 msgstr ""
 
-#: src/main.cpp:51
+#: src/Actions.h:41
+#, kde-format
+msgid "Exits desktop recovery and returns to the desktop."
+msgstr ""
+
+#: src/contents/ui/Main.qml:138
 #, kde-format
 msgid ""
-"Utility akin to the Ctrl-Alt-Delete menu on Windows, allowing a user to "
-"recover from a broken session without a terminal."
+"For keyboard navigation, hold Alt and press the underlined letter on the "
+"button."
 msgstr ""
 
-#: src/main.cpp:55
+#: src/Actions.h:82
 #, kde-format
-msgid "Thomas Duckworth (c) 2025"
+msgid "Immediately logs out of current user. All unsaved work will be lost."
 msgstr ""
 
-#: src/main.cpp:56
+#: src/Actions.h:123
 #, kde-format
-msgctxt "@info:credit"
-msgid "Thomas Duckworth"
+msgid "Immediately powers off the computer. All unsaved work will be lost."
 msgstr ""
 
-#: src/main.cpp:57
+#: src/Actions.h:199
 #, kde-format
-msgctxt "@info:credit"
-msgid "Author"
+msgid ""
+"Immediately restarts the computer and enters firmware setup. All unsaved "
+"work will be lost."
+msgstr ""
+
+#: src/Actions.h:161
+#, kde-format
+msgid "Immediately restarts the computer. All unsaved work will be lost."
+msgstr ""
+
+#: src/Actions.h:229
+#, kde-format
+msgid "Launch"
+msgstr ""
+
+#: src/Actions.h:74
+#, kde-format
+msgid "Log out"
+msgstr ""
+
+#: src/Actions.h:78
+#, kde-format
+msgid "Log out of current user"
+msgstr ""
+
+#: org.filotimoproject.atychia.desktop:5
+msgid "Menu to recover from a broken desktop session."
+msgstr ""
+
+#: src/Actions.h:233
+#, kde-format
+msgid "Open a terminal window"
+msgstr ""
+
+#: src/Actions.h:237
+#, kde-format
+msgid "Opens a Konsole window which logs into your account."
+msgstr ""
+
+#: src/Actions.h:115
+#, kde-format
+msgid "Power off"
+msgstr ""
+
+#: src/Actions.h:119
+#, kde-format
+msgid "Power off computer"
+msgstr ""
+
+#: src/Actions.h:153 src/Actions.h:191
+#, kde-format
+msgid "Restart"
+msgstr ""
+
+#: org.filotimoproject.atychia-restart-plasmashell.desktop:4
+msgid "Restart Plasmashell"
+msgstr ""
+
+#: src/Actions.h:157
+#, kde-format
+msgid "Restart computer"
+msgstr ""
+
+#: src/Actions.h:195
+#, kde-format
+msgid "Restart to firmware setup"
+msgstr ""
+
+#: src/Actions.h:33
+#, kde-format
+msgid "Return"
+msgstr ""
+
+#: src/Actions.h:37 src/contents/ui/Main.qml:45
+#, kde-format
+msgid "Return to desktop"
+msgstr ""
+
+#: src/main.cpp:80
+#, kde-format
+msgctxt "Originating as in the user that the process comes from"
+msgid "Seat number of originating user."
 msgstr ""
 
 #: src/main.cpp:77
@@ -168,6 +159,17 @@ msgctxt ""
 msgid "TTY number to return to."
 msgstr ""
 
+#: src/main.cpp:56
+#, kde-format
+msgctxt "@info:credit"
+msgid "Thomas Duckworth"
+msgstr ""
+
+#: src/main.cpp:55
+#, kde-format
+msgid "Thomas Duckworth (c) 2025"
+msgstr ""
+
 #: src/main.cpp:79
 #, kde-format
 msgctxt ""
@@ -176,8 +178,21 @@ msgctxt ""
 msgid "UID of originating user."
 msgstr ""
 
-#: src/main.cpp:80
+#: src/main.cpp:51
 #, kde-format
-msgctxt "Originating as in the user that the process comes from"
-msgid "Seat number of originating user."
+msgid ""
+"Utility akin to the Ctrl-Alt-Delete menu on Windows, allowing a user to "
+"recover from a broken session without a terminal."
+msgstr ""
+
+#: po/rc.cpp:2 src/main.cpp:60 rc.cpp:2
+#, kde-format
+msgctxt "EMAIL OF TRANSLATORS"
+msgid "Your emails"
+msgstr ""
+
+#: po/rc.cpp:1 src/main.cpp:60 rc.cpp:1
+#, kde-format
+msgctxt "NAME OF TRANSLATORS"
+msgid "Your names"
 msgstr ""

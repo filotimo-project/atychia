@@ -1,5 +1,5 @@
 Name:          filotimo-atychia
-Version:       0.14
+Version:       0.15
 Release:       1%{?dist}
 License:       GPL-2.0-or-later
 Summary:       A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from a broken session, rather than being forced to a TTY.
