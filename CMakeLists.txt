@@ -59,13 +59,16 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/atychia-restart-plasmashell.in
 
 # i18n
 # https://techbase.kde.org/Development/Tutorials/Localization/i18n_Build_Systems/Outside_KDE_repositories
+set(TRANSLATION_TARGET_NAME ${PROJECT_NAME})
 add_subdirectory(po)
+ki18n_install(po)
 
 # Install desktop files
 install_i18n_desktop_file(${CMAKE_SOURCE_DIR}/org.filotimoproject.atychia.desktop ${KDE_INSTALL_APPDIR})
 install_i18n_desktop_file(${CMAKE_SOURCE_DIR}/org.filotimoproject.atychia-restart-plasmashell.desktop ${KDE_INSTALL_APPDIR})
 
 # Register shortcuts with KGlobalAccel
+# The path to the translated desktop file is created by the above function -- see po/CMakeLists.txt
 install(FILES ${CMAKE_BINARY_DIR}/i18ndesktopfiles/org.filotimoproject.atychia.desktop DESTINATION ${KDE_INSTALL_DATAROOTDIR}/kglobalaccel)
 install(FILES ${CMAKE_BINARY_DIR}/i18ndesktopfiles/org.filotimoproject.atychia-restart-plasmashell.desktop DESTINATION ${KDE_INSTALL_DATAROOTDIR}/kglobalaccel)
 
@@ -84,5 +87,3 @@ feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES
 file(GLOB_RECURSE ALL_CLANG_FORMAT_SOURCE_FILES src/*.cpp src/*.h)
 kde_clang_format(${ALL_CLANG_FORMAT_SOURCE_FILES})
 kde_configure_git_pre_commit_hook(CHECKS CLANG_FORMAT)
-
-ki18n_install(KF_SKIP_PO_PROCESSING po)
