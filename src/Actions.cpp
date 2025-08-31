@@ -31,6 +31,18 @@ static void returnToTTYNumberAndQuit(uint32_t ttyNum, uint32_t seatNumber)
     QCoreApplication::exit(0);
 }
 
+static void switchToGreeterAndQuit(uint32_t seatNumber)
+{
+    QDBusInterface displaymanager{u"org.freedesktop.DisplayManager"_s,
+                                  u"/org/freedesktop/DisplayManager/Seat%1"_s.arg(seatNumber),
+                                  u"org.freedesktop.DisplayManager.Seat"_s,
+                                  QDBusConnection::systemBus()};
+
+    displaymanager.callWithArgumentList(QDBus::Block, u"SwitchToGreeter"_s, {});
+
+    QCoreApplication::exit(0);
+}
+
 static bool canDoAction(QString actionText)
 {
     QDBusInterface logind{u"org.freedesktop.login1"_s, u"/org/freedesktop/login1"_s, u"org.freedesktop.login1.Manager"_s, QDBusConnection::systemBus()};
@@ -77,7 +89,7 @@ void Logout::execute()
         Q_EMIT errorOccurred(error.name(), error.message());
     }
 
-    returnToTTYNumberAndQuit(1, m_ctx->seatNumber());
+    switchToGreeterAndQuit(m_ctx->seatNumber());
 }
 
 // Power off
