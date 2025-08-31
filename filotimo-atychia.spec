@@ -1,5 +1,5 @@
 Name:          filotimo-atychia
-Version:       0.15
+Version:       0.16
 Release:       1%{?dist}
 License:       GPL-2.0-or-later
 Summary:       A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from a broken session, rather than being forced to a TTY.
@@ -68,6 +68,12 @@ desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproje
 %{_kf6_datadir}/polkit-1/rules.d/99-filotimo-atychia.rules
 
 %changelog
+* Sun Aug 31 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.16-1
+- chore: update readme (tduck@filotimoproject.org)
+- fix: make logout work multi-user and more robustly
+  (tduck@filotimoproject.org)
+- fix: get i18n to work (tduck@filotimoproject.org)
+
 * Mon Jul 14 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.15-1
 - feat: better i18n including desktop files (tduck@filotimoproject.org)
 
