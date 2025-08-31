@@ -11,9 +11,21 @@ Attempts to look a bit like the Plymouth boot screen - you'll find that it takes
 Requires an up to date version of KDE Frameworks 6, Qt 6, systemd, logind, and Polkit.
 Requires `cage`, the Wayland kiosk compositor, to be installed.
 
+## Build and installation
+
+Dependencies can be installed with:
+```
+sudo dnf install rpmspec ninja-build clang
+sudo dnf builddep ./filotimo-atychia.spec
+sudo dnf install $(rpmspec -q --requires ./filotimo-atychia.spec | xargs)
+```
+
 You can build and install this with the following:
 ```
-mkdir -p build && cd build
-cmake .. -G "Kate - Ninja" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-sudo ninja-build -C . install
+cmake -B build/ -DCMAKE_INSTALL_PREFIX=/usr && cmake --build build/ -v && sudo cmake --install build/
+```
+
+or, if you have a KDE development environment set up that you can log in to the session for:
+```
+cmake -B build/ -DCMAKE_INSTALL_PREFIX=~/kde/usr && cmake --build build/ -v && cmake --install build/
 ```
