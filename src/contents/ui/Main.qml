@@ -146,6 +146,7 @@ Kirigami.ApplicationWindow {
                 Kirigami.Heading {
                     text: i18n("For keyboard navigation, hold Alt and press the underlined letter on the button.")
                     level: 4
+                    color: "white"
                 }
 
                 Repeater {

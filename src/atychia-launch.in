@@ -36,6 +36,8 @@ sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
   --property TTYPath="$free_tty" \
   --property TTYReset=yes \
   --property TTYVHangup=yes \
+  --property TTYVTDisallocate=yes \
+  --property Nice=-1 \
   --property Environment="XCURSOR_THEME=breeze_cursors" \
   --property Environment="WLR_NO_HARDWARE_CURSORS=1" \
   --property Environment="QT_QPA_PLATFORMTHEME=kde" \
