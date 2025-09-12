@@ -1,0 +1,45 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: 2025 Thomas Duckworth <tduck@filotimoproject.org>
+
+# This script is invoked with pkexec.
+
+# Get the user ID and username of the user who invoked pkexec
+# (the user to run the new session as, i.e. the logged-in user)
+uid="$PKEXEC_UID"
+username="$(id -nu $uid)"
+
+# Find the previous TTY of the user.
+prev_tty=$(@KDE_INSTALL_FULL_BINDIR@/loginctl list-sessions | awk '$7 != "-" && $2 == '$uid'' | xargs | cut -f 7 -d " ")
+prev_tty_num=$(echo $prev_tty | cut -c 4-)
+
+# Find a free TTY to run the new session on.
+free_tty=$(find -L /proc/[1-9]*/fd/. ! -name . -prune -type c -exec  stat -Lc '%t %T' {} + |
+  awk '$1 == "4" {seen[$2]}
+     END {
+     for (i=1; i<=63; i++)
+       if (!(sprintf("%x", i) in seen))
+       print "/dev/tty" i
+     }' | tail -n 1)
+seat_num=$(@KDE_INSTALL_FULL_BINDIR@/loginctl list-sessions | awk '$4 != "-" && $2 == '$uid'' | xargs | cut -f 4 -d " " | cut -b 5-)
+
+# Switch to the new TTY.
+# This must be done first or else KWin won't be able to open a display.
+chvt "$(echo "$free_tty" | cut -c 9-)"
+
+# Start a new session on the free TTY using systemd-run.
+# The session runs kwin_wayland and Atychia which fullscreens itself and stays in the background.
+sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
+  --property PAMName=login \
+  --property User="$username" \
+  --property StandardInput=tty \
+  --property TTYPath="$free_tty" \
+  --property TTYReset=yes \
+  --property TTYVHangup=yes \
+  --property Environment="XCURSOR_THEME=breeze_cursors" \
+  --property Environment="WLR_NO_HARDWARE_CURSORS=1" \
+  --property Environment="QT_QPA_PLATFORMTHEME=kde" \
+  --property Environment="XDG_CURRENT_DESKTOP=kde" \
+  --property Environment="KDE_HOME_READONLY=1" \
+  bash -c "@KDE_INSTALL_FULL_BINDIR@/kwin_wayland --no-lockscreen --no-global-shortcuts --no-kactivities --exit-with-session \"@KDE_INSTALL_FULL_BINDIR@/atychia $prev_tty_num $uid $seat_num\" || chvt $prev_tty_num"
+

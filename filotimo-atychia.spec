@@ -27,9 +27,10 @@ BuildRequires: cmake(KF6I18n)
 BuildRequires: cmake(KF6KirigamiAddons)
 BuildRequires: cmake(KF6Config)
 BuildRequires: cmake(KF6ColorScheme)
+BuildRequires: cmake(KF6Service)
+BuildRequires: cmake(KF6KIO)
 
 Requires: hicolor-icon-theme
-Requires: cage
 Requires: qt6qml(org.kde.coreaddons)
 Requires: qt6qml(org.kde.kirigami)
 Requires: qt6qml(org.kde.kirigamiaddons.formcard)
@@ -52,20 +53,15 @@ A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from 
 
 %check
 desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproject.atychia.desktop
-desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproject.atychia-restart-plasmashell.desktop
 
 # -f %{name}.lang - no translations yet
 %files
 %license LICENSES/*
 %{_kf6_bindir}/atychia
 %{_kf6_bindir}/atychia-launch
-%{_kf6_bindir}/atychia-restart-plasmashell
 %{_kf6_datadir}/applications/org.filotimoproject.atychia.desktop
-%{_kf6_datadir}/applications/org.filotimoproject.atychia-restart-plasmashell.desktop
 %{_kf6_datadir}/kglobalaccel/org.filotimoproject.atychia.desktop
-%{_kf6_datadir}/kglobalaccel/org.filotimoproject.atychia-restart-plasmashell.desktop
 %{_kf6_datadir}/polkit-1/actions/org.filotimoproject.atychia-launch.policy
-%{_kf6_datadir}/polkit-1/rules.d/99-filotimo-atychia.rules
 
 %changelog
 * Sun Aug 31 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.16-1

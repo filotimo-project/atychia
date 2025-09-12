@@ -6,7 +6,9 @@
 #include "Actions.h"
 #include "directories.h"
 
+#include <KIO/ApplicationLauncherJob>
 #include <KLocalizedString>
+#include <KService>
 #include <QCoreApplication>
 #include <QDBusInterface>
 #include <QDBusPendingReply>
@@ -14,7 +16,7 @@
 #include <QProcess>
 #include <QThread>
 #include <csignal>
-#include <pwd.h>
+#include <qcoreapplication.h>
 #include <unistd.h>
 
 using namespace Qt::Literals::StringLiterals;
@@ -31,7 +33,7 @@ static void returnToTTYNumberAndQuit(uint32_t ttyNum, uint32_t seatNumber)
     QCoreApplication::exit(0);
 }
 
-static void switchToGreeterAndQuit(uint32_t seatNumber)
+static void switchToGreeter(uint32_t seatNumber)
 {
     QDBusInterface displaymanager{u"org.freedesktop.DisplayManager"_s,
                                   u"/org/freedesktop/DisplayManager/Seat%1"_s.arg(seatNumber),
@@ -72,12 +74,13 @@ void Return::execute()
 // Logout
 void Logout::execute()
 {
+    switchToGreeter(m_ctx->seatNumber());
+
     QDBusInterface logind{u"org.freedesktop.login1"_s, u"/org/freedesktop/login1"_s, u"org.freedesktop.login1.Manager"_s, QDBusConnection::systemBus()};
     const auto message = logind.callWithArgumentList(QDBus::Block,
-                                                     u"KillUser"_s,
+                                                     u"TerminateUser"_s,
                                                      {
                                                          m_ctx->userUid(),
-                                                         SIGTERM,
                                                      });
 
     QDBusPendingReply<QString> killedUser = message;
@@ -89,7 +92,7 @@ void Logout::execute()
         Q_EMIT errorOccurred(error.name(), error.message());
     }
 
-    switchToGreeterAndQuit(m_ctx->seatNumber());
+    QCoreApplication::exit(0);
 }
 
 // Power off
@@ -146,57 +149,18 @@ bool Restart::canExecute() const
     return canDoAction(u"CanReboot"_s);
 }
 
-// Restart to firmware setup
-void RestartToFirmwareSetup::execute()
-{
-    QDBusInterface logind{u"org.freedesktop.login1"_s, u"/org/freedesktop/login1"_s, u"org.freedesktop.login1.Manager"_s, QDBusConnection::systemBus()};
-
-    const auto message = logind.callWithArgumentList(QDBus::Block,
-                                                     u"SetRebootToFirmwareSetup"_s,
-                                                     {
-                                                         true,
-                                                     });
-    QDBusPendingReply<QString> setRebootToFirmwareSetup = message;
-
-    Q_ASSERT(setRebootToFirmwareSetup.isFinished());
-    if (setRebootToFirmwareSetup.isError()) {
-        const auto error = setRebootToFirmwareSetup.error();
-        qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
-        Q_EMIT errorOccurred(error.name(), error.message());
-        return;
-    }
-
-    QDBusPendingReply<> reboot = logind.callWithArgumentList(QDBus::Block,
-                                                             u"Reboot"_s,
-                                                             {
-                                                                 true,
-                                                             });
-    Q_ASSERT(reboot.isFinished());
-    if (reboot.isError()) {
-        const auto error = reboot.error();
-        qWarning().noquote() << i18n("Asynchronous call finished with error: %1 (%2)").arg(error.name(), error.message());
-        Q_EMIT errorOccurred(error.name(), error.message());
-        return;
-    }
-
-    QCoreApplication::exit(0);
-}
-
-bool RestartToFirmwareSetup::canExecute() const
-{
-    return canDoAction(u"CanRebootToFirmwareSetup"_s);
-}
-
-// Launch a terminal
+// Launch Konsole
 void LaunchKonsole::execute()
 {
-    struct passwd *pwd = getpwuid(m_ctx->userUid());
-    QStringList args{
-        u"-e"_s,
-        u"/%1/su"_s.arg(QString::fromUtf8(BINDIR)),
-        u"-"_s,
-        u"%1"_s.arg(QString::fromUtf8(pwd->pw_name)),
-    };
-    QProcess process;
-    process.startDetached(u"/%1/konsole"_s.arg(QString::fromUtf8(BINDIR)), args);
+    const KService::Ptr service = KService::serviceByDesktopName(u"org.kde.konsole"_s);
+    KIO::ApplicationLauncherJob *job = new KIO::ApplicationLauncherJob(service, {});
+    job->start();
+}
+
+// Launch System Monitor
+void LaunchSystemMonitor::execute()
+{
+    const KService::Ptr service = KService::serviceByDesktopName(u"org.kde.plasma-systemmonitor"_s);
+    KIO::ApplicationLauncherJob *job = new KIO::ApplicationLauncherJob(service, {});
+    job->start();
 }

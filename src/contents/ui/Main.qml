@@ -11,6 +11,11 @@ import org.filotimoproject.atychia
 Kirigami.ApplicationWindow {
     id: root
 
+    visibility: "FullScreen"
+    flags: Qt.FramelessWindowHint
+         | Qt.WindowStaysOnBottomHint
+
+
     objectName: "mainWindow"
     pageStack.initialPage: page
     pageStack.globalToolBar.style: Kirigami.ApplicationHeaderStyle.None
@@ -124,14 +129,18 @@ Kirigami.ApplicationWindow {
             color: "black"
         }
 
-        Item {
-            anchors.centerIn: parent
-            width: contentColumn.implicitWidth
-            height: contentColumn.implicitHeight
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: Kirigami.Units.largeSpacing * 2
 
             ColumnLayout {
                 id: contentColumn
 
+                Layout.fillWidth: false
+                Layout.fillHeight: false
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
+                width: contentColumn.implicitWidth
                 spacing: Kirigami.Units.largeSpacing * 2
 
                 Kirigami.Heading {
@@ -143,22 +152,23 @@ Kirigami.ApplicationWindow {
                     model: Actions
                     delegate: actionsDelegate
                 }
-
             }
-
-        }
-
-        ColumnLayout {
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: Kirigami.Units.largeSpacing * 4
 
             Image {
-                Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
+                id: watermarkImage
+                Layout.bottomMargin: Kirigami.Units.largeSpacing * 2
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+
                 source: "file:///usr/share/plymouth/themes/spinner/watermark.png"
+                fillMode: Image.PreserveAspectFit
+
+                property real contentBottom: contentColumn.y + contentColumn.height
+                property int availableHeight: page.height - contentBottom - anchors.bottomMargin
+
+                // Set the image's height to be the smaller of its natural
+                // size or the calculated available space.
+                height: Math.max(32, Math.min(sourceSize.height, availableHeight))
             }
-
         }
-
     }
-
 }

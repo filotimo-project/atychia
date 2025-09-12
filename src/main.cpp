@@ -61,11 +61,6 @@ int main(int argc, char *argv[])
     KAboutData::setApplicationData(aboutData);
     QGuiApplication::setWindowIcon(QIcon::fromTheme(u"system-help"_s));
 
-    // Set the default color scheme to Filotimo Dark
-    KColorSchemeManager *manager = KColorSchemeManager::instance();
-    QModelIndex index = manager->indexForScheme(u"Filotimo Dark"_s);
-    manager->activateScheme(index);
-
     // Parse command line arguments
     // These are passed from the libexec script
     QCommandLineParser parser;

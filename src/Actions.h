@@ -171,44 +171,6 @@ public:
     Q_SIGNAL void errorOccurred(QString name, QString description) const;
 };
 
-class RestartToFirmwareSetup : public Action
-{
-    Q_OBJECT
-    Q_PROPERTY(QString buttonText READ buttonText CONSTANT)
-    Q_PROPERTY(QString name READ name CONSTANT)
-    Q_PROPERTY(QString description READ description CONSTANT)
-    Q_PROPERTY(QString iconSource READ iconSource CONSTANT)
-    Q_PROPERTY(bool canExecute READ canExecute CONSTANT)
-
-public:
-    explicit RestartToFirmwareSetup(QObject *parent = nullptr, ActionContext *ctx = nullptr)
-        : Action(parent, ctx)
-    {
-    }
-
-    QString buttonText() const override
-    {
-        return i18n("Restart");
-    }
-    QString name() const override
-    {
-        return i18n("Restart to firmware setup");
-    }
-    QString description() const override
-    {
-        return i18n("Immediately restarts the computer and enters firmware setup. All unsaved work will be lost.");
-    }
-    QString iconSource() const override
-    {
-        return u"preferences-system-symbolic"_s;
-    }
-
-    bool canExecute() const override;
-    Q_INVOKABLE void execute() override;
-
-    Q_SIGNAL void errorOccurred(QString name, QString description) const;
-};
-
 class LaunchKonsole : public Action
 {
     Q_OBJECT
@@ -250,6 +212,47 @@ public:
     Q_SIGNAL void errorOccurred(QString name, QString description) const;
 };
 
+class LaunchSystemMonitor : public Action
+{
+    Q_OBJECT
+    Q_PROPERTY(QString buttonText READ buttonText CONSTANT)
+    Q_PROPERTY(QString name READ name CONSTANT)
+    Q_PROPERTY(QString description READ description CONSTANT)
+    Q_PROPERTY(QString iconSource READ iconSource CONSTANT)
+    Q_PROPERTY(bool canExecute READ canExecute CONSTANT)
+
+public:
+    explicit LaunchSystemMonitor(QObject *parent = nullptr, ActionContext *ctx = nullptr)
+        : Action(parent, ctx)
+    {
+    }
+
+    QString buttonText() const override
+    {
+        return i18n("Launch");
+    }
+    QString name() const override
+    {
+        return i18n("Open System Monitor");
+    }
+    QString description() const override
+    {
+        return i18n("Opens the System Monitor application.");
+    }
+    QString iconSource() const override
+    {
+        return u"view-process-all-symbolic"_s;
+    }
+
+    bool canExecute() const override
+    {
+        return true;
+    }
+    Q_INVOKABLE void execute() override;
+
+    Q_SIGNAL void errorOccurred(QString name, QString description) const;
+};
+
 // The model for all the actions as well as direct access to specific actions
 class ActionModel : public QAbstractListModel
 {
@@ -258,8 +261,8 @@ class ActionModel : public QAbstractListModel
     Q_PROPERTY(Logout *logoutAction READ logout CONSTANT)
     Q_PROPERTY(PowerOff *powerOffAction READ powerOff CONSTANT)
     Q_PROPERTY(Restart *restartAction READ restart CONSTANT)
-    Q_PROPERTY(RestartToFirmwareSetup *restartToFirmwareSetupAction READ restartToFirmwareSetup CONSTANT)
     Q_PROPERTY(LaunchKonsole *launchKonsoleAction READ launchKonsole CONSTANT)
+    Q_PROPERTY(LaunchSystemMonitor *launchSystemMonitorAction READ launchSystemMonitor CONSTANT)
 
 public:
     enum ActionRoles {
@@ -277,12 +280,12 @@ public:
         , m_logoutAction(new Logout(this, ctx))
         , m_powerOffAction(new PowerOff(this, ctx))
         , m_restartAction(new Restart(this, ctx))
-        , m_restartToFirmwareSetupAction(new RestartToFirmwareSetup(this, ctx))
         , m_launchKonsoleAction(new LaunchKonsole(this, ctx))
+        , m_launchSystemMonitorAction(new LaunchSystemMonitor(this, ctx))
     {
         // Initialise the list with the members
         // Any new Action needs to have a member in this class, and be added to this list
-        m_actions = {m_returnAction, m_logoutAction, m_powerOffAction, m_restartAction, m_restartToFirmwareSetupAction, m_launchKonsoleAction};
+        m_actions = {m_returnAction, m_logoutAction, m_powerOffAction, m_restartAction, m_launchKonsoleAction, m_launchSystemMonitorAction};
 
         // Connect the errorOccurred signal from each action to the model
         for (Action *action : m_actions) {
@@ -354,13 +357,13 @@ public:
     {
         return m_restartAction;
     }
-    RestartToFirmwareSetup *restartToFirmwareSetup() const
-    {
-        return m_restartToFirmwareSetupAction;
-    }
     LaunchKonsole *launchKonsole() const
     {
         return m_launchKonsoleAction;
+    }
+    LaunchSystemMonitor *launchSystemMonitor() const
+    {
+        return m_launchSystemMonitorAction;
     }
 
     Q_SIGNAL void errorOccurred(QString name, QString description) const;
@@ -372,6 +375,6 @@ private:
     Logout *m_logoutAction;
     PowerOff *m_powerOffAction;
     Restart *m_restartAction;
-    RestartToFirmwareSetup *m_restartToFirmwareSetupAction;
     LaunchKonsole *m_launchKonsoleAction;
+    LaunchSystemMonitor *m_launchSystemMonitorAction;
 };

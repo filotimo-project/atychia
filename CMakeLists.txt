@@ -40,7 +40,7 @@ find_package(
              DBus
              ${QT_EXTRA_COMPONENTS})
 find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS Kirigami CoreAddons
-                                                        I18n ColorScheme)
+                                                        I18n ColorScheme Service KIO)
 
 qt_policy(SET QTP0001 NEW)
 
@@ -51,11 +51,9 @@ add_subdirectory(src)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/directories.h.in
                ${CMAKE_CURRENT_SOURCE_DIR}/src/directories.h @ONLY)
 
-# Shell scriptslinux
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/atychia-launch.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/atychia-launch @ONLY)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/atychia-restart-plasmashell.in
-               ${CMAKE_CURRENT_SOURCE_DIR}/atychia-restart-plasmashell @ONLY)
+# Shell scripts
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/atychia-launch.in
+               ${CMAKE_BINARY_DIR}/atychia-launch @ONLY)
 
 # i18n
 # https://techbase.kde.org/Development/Tutorials/Localization/i18n_Build_Systems/Outside_KDE_repositories
@@ -65,20 +63,15 @@ ki18n_install(po)
 
 # Install desktop files
 install_i18n_desktop_file(${CMAKE_SOURCE_DIR}/org.filotimoproject.atychia.desktop ${KDE_INSTALL_APPDIR})
-install_i18n_desktop_file(${CMAKE_SOURCE_DIR}/org.filotimoproject.atychia-restart-plasmashell.desktop ${KDE_INSTALL_APPDIR})
 
 # Register shortcuts with KGlobalAccel
 # The path to the translated desktop file is created by the above function -- see po/CMakeLists.txt
 install(FILES ${CMAKE_BINARY_DIR}/i18ndesktopfiles/org.filotimoproject.atychia.desktop DESTINATION ${KDE_INSTALL_DATAROOTDIR}/kglobalaccel)
-install(FILES ${CMAKE_BINARY_DIR}/i18ndesktopfiles/org.filotimoproject.atychia-restart-plasmashell.desktop DESTINATION ${KDE_INSTALL_DATAROOTDIR}/kglobalaccel)
 
 install(FILES org.filotimoproject.atychia-launch.policy
         DESTINATION ${KDE_INSTALL_DATAROOTDIR}/polkit-1/actions)
-install(FILES 99-filotimo-atychia.rules
-        DESTINATION ${KDE_INSTALL_DATAROOTDIR}/polkit-1/rules.d)
 
-install(PROGRAMS atychia-launch DESTINATION ${KDE_INSTALL_BINDIR})
-install(PROGRAMS atychia-restart-plasmashell
+install(PROGRAMS ${CMAKE_BINARY_DIR}/atychia-launch 
         DESTINATION ${KDE_INSTALL_BINDIR})
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES
