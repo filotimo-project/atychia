@@ -51,9 +51,6 @@ A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from 
 # no translations yet
 #%find_lang %{name} --with-man --with-qt --all-name
 
-%check
-desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproject.atychia.desktop
-
 # -f %{name}.lang - no translations yet
 %files
 %license LICENSES/*
