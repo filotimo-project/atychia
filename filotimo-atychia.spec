@@ -58,9 +58,9 @@ desktop-file-validate %{buildroot}%{_kf6_datadir}/applications/org.filotimoproje
 %files
 %license LICENSES/*
 %{_kf6_bindir}/atychia
+%{_kf6_bindir}/atychiad
 %{_kf6_bindir}/atychia-launch
-%{_kf6_datadir}/applications/org.filotimoproject.atychia.desktop
-%{_kf6_datadir}/kglobalaccel/org.filotimoproject.atychia.desktop
+%{_kf6_libdir}/systemd/user/atychiad.service
 %{_kf6_datadir}/polkit-1/actions/org.filotimoproject.atychia-launch.policy
 
 %changelog

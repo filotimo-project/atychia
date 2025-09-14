@@ -61,13 +61,6 @@ set(TRANSLATION_TARGET_NAME ${PROJECT_NAME})
 add_subdirectory(po)
 ki18n_install(po)
 
-# Install desktop files
-install_i18n_desktop_file(${CMAKE_SOURCE_DIR}/org.filotimoproject.atychia.desktop ${KDE_INSTALL_APPDIR})
-
-# Register shortcuts with KGlobalAccel
-# The path to the translated desktop file is created by the above function -- see po/CMakeLists.txt
-install(FILES ${CMAKE_BINARY_DIR}/i18ndesktopfiles/org.filotimoproject.atychia.desktop DESTINATION ${KDE_INSTALL_DATAROOTDIR}/kglobalaccel)
-
 install(FILES org.filotimoproject.atychia-launch.policy
         DESTINATION ${KDE_INSTALL_DATAROOTDIR}/polkit-1/actions)
 

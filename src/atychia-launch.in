@@ -44,4 +44,3 @@ sudo @KDE_INSTALL_FULL_BINDIR@/systemd-run \
   --property Environment="XDG_CURRENT_DESKTOP=kde" \
   --property Environment="KDE_HOME_READONLY=1" \
   bash -c "@KDE_INSTALL_FULL_BINDIR@/kwin_wayland --no-lockscreen --no-global-shortcuts --no-kactivities --exit-with-session \"@KDE_INSTALL_FULL_BINDIR@/atychia $prev_tty_num $uid $seat_num\" || chvt $prev_tty_num"
-

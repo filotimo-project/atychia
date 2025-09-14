@@ -1,0 +1,9 @@
+[Unit]
+Description=Atychia Secure Attention Key Daemon
+
+[Service]
+ExecStart=@KDE_INSTALL_FULL_BINDIR@/atychiad
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

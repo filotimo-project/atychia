@@ -6,6 +6,6 @@
 #ifndef DIRECTORIES_H_IN
 #define DIRECTORIES_H_IN
 
-#define BINDIR "@KDE_INSTALL_BINDIR@"
+#define BINDIR "@KDE_INSTALL_FULL_BINDIR@"
 
 #endif
