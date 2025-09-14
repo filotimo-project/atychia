@@ -1,7 +1,7 @@
 # Atychia
 
 A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from a broken session, rather than being forced to a TTY.
-This automatically registers a shortcut with KDE, and is designed for use with KDE. Registers `Meta+Ctrl+Alt+Del` by default.
+This is designed for use with KDE, and hooks into systemd-logind's Secure Attention Key, which is Ctrl+Alt+Shift+Esc.
 
 Attempts to look a bit like the Plymouth boot screen - you'll find that it takes the watermark from the spinner theme, and has a black background for consistency.
 
