@@ -1,6 +1,6 @@
 Name:          filotimo-atychia
 Version:       0.19
-Release:       1%{?dist}
+Release:       2%{?dist}
 License:       GPL-2.0-or-later
 Summary:       A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from a broken session, rather than being forced to a TTY.
 URL:           https://github.com/filotimo-project/atychia
@@ -61,6 +61,10 @@ A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from 
 %{_kf6_datadir}/polkit-1/actions/org.filotimoproject.atychia-launch.policy
 
 %changelog
+* Sun Sep 14 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.19-2
+- fix: specfile (tduck@filotimoproject.org)
+- Update README.md (tduck973564@gmail.com)
+
 * Sun Sep 14 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.19-1
 - hook into Secure Attention Key instead (tduck@filotimoproject.org)
 
