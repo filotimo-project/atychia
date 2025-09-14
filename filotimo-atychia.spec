@@ -1,6 +1,6 @@
 Name:          filotimo-atychia
 Version:       0.19
-Release:       2%{?dist}
+Release:       3%{?dist}
 License:       GPL-2.0-or-later
 Summary:       A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from a broken session, rather than being forced to a TTY.
 URL:           https://github.com/filotimo-project/atychia
@@ -57,7 +57,7 @@ A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from 
 %{_kf6_bindir}/atychia
 %{_kf6_bindir}/atychiad
 %{_kf6_bindir}/atychia-launch
-%{_kf6_libdir}/systemd/user/atychiad.service
+%{_prefix}/lib/systemd/user/atychiad.service
 %{_kf6_datadir}/polkit-1/actions/org.filotimoproject.atychia-launch.policy
 
 %changelog
