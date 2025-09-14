@@ -61,6 +61,12 @@ A utility akin to Ctrl-Alt-Delete on Windows that allows a user to recover from 
 %{_kf6_datadir}/polkit-1/actions/org.filotimoproject.atychia-launch.policy
 
 %changelog
+* Sun Sep 14 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.19-3
+- fix: specfile (tduck@filotimoproject.org)
+- Automatic commit of package [filotimo-atychia] release [0.19-2].
+  (tduck@filotimoproject.org)
+- fix: specfile (tduck@filotimoproject.org)
+
 * Sun Sep 14 2025 Thomas Duckworth <tduck@filotimoproject.org> 0.19-2
 - fix: specfile (tduck@filotimoproject.org)
 - Update README.md (tduck973564@gmail.com)
